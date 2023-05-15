@@ -1,2 +1,2 @@
 # jaxple.github.io
-학원 프로젝트용
+개인 페이지~
