@@ -1,0 +1,65 @@
+/* 
+pseudo class selector 연습
+
+:nth-child() 
+:not() 
+
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+
+* {
+    font-family: 'Montserrat', sans-serif;
+    color: red;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: min-content;
+    margin: auto;
+}
+
+.row {
+    display: flex;
+}
+
+.row-first .box {
+    border-bottom: solid 2px red;
+}
+
+.column-first {
+    border-right: solid 2px red;
+}
+
+.row>.box:nth-child(1):not(.row-first .column-first) {
+    border-top: solid 1px red;
+}
+
+.row>.box:nth-child(n+2):not(.row-first .box).box {
+    border-top : solid 1px red;
+    cursor : pointer;
+}
+
+.row>.box:not(.column-first){
+    border-left : solid 1px red;
+}
+
+.box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    width: 30px;
+    height: 30px;
+    
+}
+
+.box:hover:not(.row-first .box):not(.column-first){
+    background-color: rgba(255, 0, 0, 0.3);
+}
