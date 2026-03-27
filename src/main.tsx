@@ -12,7 +12,7 @@ if (!import.meta.env.DEV) {
       document.body.innerHTML = `
         <div style="background-color:#000;color:#10b981;height:100vh;display:flex;align-items:center;justify-content:center;font-family:monospace;font-size:20px;flex-direction:column;">
           <p>[System Auth Failed]</p>
-          <p>Access Denied.</p>
+          <p>나빠용! 싫어용!</p>
         </div>
       `;
     }
