@@ -1,10 +1,22 @@
 import { Github, Linkedin, Mail } from 'lucide-react';
+import React, { useState } from 'react';
 
-export const ProfileHeader: React.FC = () => (
+export const ProfileHeader: React.FC = () => {
+  const [spinCount, setSpinCount] = useState(0);
+
+  return (
   <header className="flex flex-col items-center text-center space-y-6">
-    <div className="w-24 h-24 rounded-full border-2 border-[#27272a] shadow-[0_0_30px_rgba(255,255,255,0.05)] relative p-1 bg-[#18181b]">
-      <img src="https://avatars.githubusercontent.com/u/114869036?v=4" alt="Profile" className="w-full h-full rounded-full object-cover" />
-      <div className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 rounded-full border-[3px] border-[#18181b]"></div>
+    <div 
+      onClick={() => setSpinCount(s => s + 1)}
+      className="group w-24 h-24 rounded-full border-2 border-[#27272a] shadow-[0_0_30px_rgba(255,255,255,0.05)] relative p-1 bg-[#18181b] cursor-pointer"
+      style={{ 
+        transform: `rotate(${spinCount * 360}deg)`,
+        transition: 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+      }}
+      title="Easter Egg! Click me"
+    >
+      <img src="https://avatars.githubusercontent.com/u/114869036?v=4" alt="Profile" className="w-full h-full rounded-full object-cover group-hover:scale-105 transition-transform duration-500" />
+      <div className="absolute bottom-1 right-1 w-4 h-4 bg-[#10b981] rounded-full border-[3px] border-[#18181b] group-hover:bg-[#34d399] transition-colors duration-500 blur-[1px] group-hover:blur-0"></div>
     </div>
     
     <div className="space-y-2">
@@ -44,4 +56,5 @@ export const ProfileHeader: React.FC = () => (
       </a>
     </div>
   </header>
-);
+  );
+};
