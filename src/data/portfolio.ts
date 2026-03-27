@@ -30,7 +30,7 @@ export interface Skill {
 export const PROJECTS_DATA: Project[] = [
   {
     id: 'r10-core',
-    title: 'R10 Core Architecture',
+    title: 'R10 Minecraft 플러그인',
     period: '2022.12 — 현재',
     desc: [
       'Java 기반 동시접속 20명+ 규모 게임 서버 운영',
@@ -55,7 +55,7 @@ export const PROJECTS_DATA: Project[] = [
   },
   {
     id: 'cosmos',
-    title: 'Cosmos Data Pipeline',
+    title: 'TradingView <-> Telegram 시세 알림 미들웨어',
     period: '2025.03 - 2025.06',
     desc: [
       'TradingView-Telegram 연동 암호화폐 시세 알림 미들웨어 구축',
@@ -74,7 +74,7 @@ export const PROJECTS_DATA: Project[] = [
   },
   {
     id: 'semicon-control',
-    title: 'Semicon Control System',
+    title: 'MFC 기반 반도체 장비 제어 SW',
     period: '2023.07 - 2025.01',
     desc: [
       'MFC(C++) 기반 글로벌 반도체 6개국 고객사 대상 장비 제어 SW 개발',
