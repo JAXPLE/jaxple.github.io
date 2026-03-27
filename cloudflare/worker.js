@@ -36,7 +36,7 @@ async function handleRequest(request) {
   if (url.pathname.endsWith('.js')) {
     const referer = request.headers.get('Referer') || '';
     if (referer && !referer.includes(ALLOWED_ORIGIN)) {
-      return new Response('나빠용! 싫어용!', {
+      return new Response('코드가 궁금하시다면, https://github.com/JAXPLE/jaxple.github.io 여기로 들어가서 확인해주세요!', {
         status: 403,
         headers: { 'Content-Type': 'text/plain' },
       });
