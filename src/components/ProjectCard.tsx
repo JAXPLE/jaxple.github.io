@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { ChevronRight, Github, BookOpen } from 'lucide-react';
 
 interface LinkType {
@@ -24,25 +24,6 @@ interface ProjectCardProps {
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const [isActive, setIsActive] = useState(false);
   const [isTouch, setIsTouch] = useState(false);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isTouch || !cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const tiltX = (y - centerY) / 10;
-    const tiltY = (centerX - x) / 10;
-    setTilt({ x: tiltX, y: tiltY });
-  };
-
-  const handleMouseLeave = () => {
-    setIsActive(false);
-    setTilt({ x: 0, y: 0 });
-  };
 
   const getIcon = (type: string) => {
     if (type === 'github') return <Github size={14} />;
@@ -53,15 +34,10 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
   return (
     <div 
-      ref={cardRef}
-      className={`relative p-4 md:p-5 rounded-xl border transition-all duration-300 cursor-default perspective-1000 ${isActive ? 'border-[#52525b] bg-[#121214] shadow-[0_20px_40px_rgba(0,0,0,0.3)]' : 'border-[#27272a] bg-[#09090b]'}`}
-      style={{
-        transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-      }}
+      className={`relative p-4 md:p-5 rounded-xl border transition-all duration-300 cursor-default ${isActive ? 'border-[#52525b] bg-[#121214] shadow-[0_8px_24px_rgba(0,0,0,0.3)]' : 'border-[#27272a] bg-[#09090b]'}`}
       onTouchStart={() => setIsTouch(true)}
       onMouseEnter={() => { if (!isTouch) setIsActive(true); }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      onMouseLeave={() => { if (!isTouch) setIsActive(false); }}
       onClick={() => { if (isTouch) setIsActive(!isActive); }}
     >
       <div className="flex justify-between items-start mb-2 relative z-10">
