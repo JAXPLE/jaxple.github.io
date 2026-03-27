@@ -61,8 +61,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       </div>
       
       {/* 기술 스택 */}
-      <div className="relative ml-5">
-        <div className={`flex flex-wrap gap-2 transition-all duration-500 ease-in-out ${hasLinks && isActive ? 'opacity-0 -translate-y-2 pointer-events-none' : 'opacity-100 pointer-events-auto'}`}>
+      <div className="ml-5">
+        <div className={`flex flex-wrap gap-2 transition-all duration-500 ease-in-out ${hasLinks && isActive ? 'opacity-0 max-h-0 overflow-hidden pointer-events-none mb-0' : 'opacity-100 max-h-40 pointer-events-auto'}`}>
           {project.tech.map((t) => (
             <span key={t} className="font-mono text-[10px] px-2 py-1 rounded-md bg-[#18181b] border border-[#27272a] text-[#d4d4d8]">
               {t}
@@ -70,9 +70,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           ))}
         </div>
 
-        {/* 활성화 시 링크 버튼 (기술 스택 위에 절대 위치) */}
+        {/* 활성화 시 링크 버튼 */}
         {hasLinks && (
-          <div className={`absolute top-[-2px] left-0 flex flex-wrap gap-2 w-full transition-all duration-500 z-20 ${isActive ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-2 pointer-events-none'}`}>
+          <div className={`flex flex-wrap gap-2 transition-all duration-500 ${isActive ? 'opacity-100 max-h-40 pointer-events-auto' : 'opacity-0 max-h-0 overflow-hidden pointer-events-none'}`}>
             {project.links!.map((linkItem, idx) => (
               <a 
                 key={idx}

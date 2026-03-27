@@ -5,7 +5,7 @@ export const ProfileHeader: React.FC = () => {
   const [spinCount, setSpinCount] = useState(0);
 
   return (
-  <header className="flex flex-col items-center text-center space-y-6">
+  <header className="w-full flex flex-col items-center text-center space-y-6">
     <div 
       onClick={() => setSpinCount(s => s + 1)}
       className="group w-24 h-24 rounded-full border-2 border-[#27272a] shadow-[0_0_30px_rgba(255,255,255,0.05)] relative p-1 bg-[#18181b] cursor-pointer"
