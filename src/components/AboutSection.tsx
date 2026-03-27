@@ -34,6 +34,16 @@ export const AboutSection: React.FC = () => {
             레거시 통신 코드를 개선하고 PLC 팀과 협업해 데이터를 블록 단위로 재설계함으로써 통신 속도를 향상시키고, 반복 업무 자동화로 팀 효율을 높였습니다.
           </p>
         </div>
+
+        <div className="group/item">
+          <h4 className="text-[#e4e4e7] font-bold flex items-center gap-2 group-hover/item:text-orange-400">
+            <span className="w-1 h-1 rounded-full bg-orange-500"></span>
+            Wurst Client 오픈소스 기여 (GitHub 1.4k+)
+          </h4>
+          <p className="pl-3 mt-1 border-l border-[#27272a] group-hover/item:border-orange-900 transition-colors">
+            채팅 이벤트 후킹 기반 Google Translate API 연동 및 멀티스레드 번역 모듈을 구현하고, 하드코딩 명령어 구조를 GUI로 리팩토링하여 PR에 반영했습니다.
+          </p>
+        </div>
       </div>
     </div>
   );
