@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { ChevronRight, Github, BookOpen } from 'lucide-react';
 
 interface LinkType {
@@ -11,7 +12,7 @@ interface ProjectType {
   id: string;
   title: string;
   period: string;
-  desc: string;
+  desc: string | string[];
   tech: string[];
   links?: LinkType[];
 }
@@ -21,6 +22,9 @@ interface ProjectCardProps {
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+  const [isActive, setIsActive] = useState(false);
+  const [isTouch, setIsTouch] = useState(false);
+
   const getIcon = (type: string) => {
     if (type === 'github') return <Github size={14} />;
     return <BookOpen size={14} />;
@@ -29,22 +33,36 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const hasLinks = project.links && project.links.length > 0;
 
   return (
-    <div className="group relative p-4 md:p-5 rounded-xl bg-[#09090b] border border-[#27272a] hover:border-[#52525b] hover:bg-[#121214] transition-all duration-500 cursor-default">
+    <div 
+      className={`relative p-4 md:p-5 rounded-xl border transition-all duration-500 cursor-default ${isActive ? 'border-[#52525b] bg-[#121214]' : 'border-[#27272a] bg-[#09090b]'}`}
+      onTouchStart={() => setIsTouch(true)}
+      onMouseEnter={() => { if (!isTouch) setIsActive(true); }}
+      onMouseLeave={() => { if (!isTouch) setIsActive(false); }}
+      onClick={() => { if (isTouch) setIsActive(!isActive); }}
+    >
       <div className="flex justify-between items-start mb-2 relative z-10">
-        <h3 className="text-white font-medium flex items-center gap-2 group-hover:text-green-400 transition-colors">
-          <ChevronRight size={14} className="text-[#52525b] group-hover:text-green-400 transition-transform duration-300 group-hover:translate-x-1" />
+        <h3 className={`font-medium flex items-center gap-2 transition-colors ${isActive ? 'text-green-400' : 'text-white'}`}>
+          <ChevronRight size={14} className={`transition-all duration-300 ${isActive ? 'text-green-400 translate-x-1' : 'text-[#52525b]'}`} />
           {project.title}
         </h3>
         <span className="font-mono text-[10px] text-[#52525b] mt-1 shrink-0 ml-2">{project.period}</span>
       </div>
       
-      <p className="text-sm text-[#a1a1aa] ml-5 leading-relaxed mb-4 relative z-10 group-hover:text-[#d4d4d8] transition-colors duration-500">
-        {project.desc}
-      </p>
+      <div className={`text-sm ml-5 leading-relaxed mb-4 relative z-10 transition-colors duration-500 ${isActive ? 'text-[#d4d4d8]' : 'text-[#a1a1aa]'}`}>
+        {Array.isArray(project.desc) ? (
+          <ul className="list-disc pl-4 space-y-1.5 marker:text-[#52525b]">
+            {project.desc.map((line, i) => (
+              <li key={i}>{line}</li>
+            ))}
+          </ul>
+        ) : (
+          <p>{project.desc}</p>
+        )}
+      </div>
       
       {/* Tech Stack Region */}
       <div className="relative ml-5">
-        <div className={`flex flex-wrap gap-2 transition-all duration-500 ease-in-out ${hasLinks ? 'opacity-100 group-hover:opacity-0 group-hover:-translate-y-2 pointer-events-auto group-hover:pointer-events-none' : ''}`}>
+        <div className={`flex flex-wrap gap-2 transition-all duration-500 ease-in-out ${hasLinks && isActive ? 'opacity-0 -translate-y-2 pointer-events-none' : 'opacity-100 pointer-events-auto'}`}>
           {project.tech.map((t) => (
             <span key={t} className="font-mono text-[10px] px-2 py-1 rounded-md bg-[#18181b] border border-[#27272a] text-[#d4d4d8]">
               {t}
@@ -54,13 +72,14 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
         {/* Hover Buttons Region (Absolute overlaying the tech stack) */}
         {hasLinks && (
-          <div className="absolute top-[-2px] left-0 flex flex-wrap gap-2 w-full opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-500 z-20">
+          <div className={`absolute top-[-2px] left-0 flex flex-wrap gap-2 w-full transition-all duration-500 z-20 ${isActive ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-2 pointer-events-none'}`}>
             {project.links!.map((linkItem, idx) => (
               <a 
                 key={idx}
                 href={linkItem.url} 
                 target="_blank" 
                 rel="noreferrer"
+                onClick={(e) => e.stopPropagation()}
                 className={`inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-lg bg-[#27272a]/95 backdrop-blur-sm border border-[#3f3f46] text-[#e4e4e7] text-xs font-mono font-medium shadow-xl transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] ${linkItem.hoverClass}`}
               >
                 {getIcon(linkItem.icon)}

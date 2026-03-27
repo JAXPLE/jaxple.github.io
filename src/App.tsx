@@ -1,8 +1,9 @@
-import { FolderGit2, Cpu } from 'lucide-react';
+import { FolderGit2, Cpu, User, Star } from 'lucide-react';
 
-import { PROJECTS_DATA } from './data/portfolio';
+import { PROJECTS_DATA, OPENSOURCE_DATA } from './data/portfolio';
 import { ProfileHeader } from './components/ProfileHeader';
 import { SectionHeader } from './components/SectionHeader';
+import { AboutSection } from './components/AboutSection';
 import { ProjectCard } from './components/ProjectCard';
 import { SkillSection } from './components/SkillSection';
 
@@ -14,9 +15,23 @@ function App() {
         <ProfileHeader />
 
         <section className="space-y-4">
+          <SectionHeader icon={User} title="~/about" />
+          <AboutSection />
+        </section>
+
+        <section className="space-y-4">
           <SectionHeader icon={FolderGit2} title="~/projects" />
           <div className="space-y-3">
             {PROJECTS_DATA.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        </section>
+
+        <section className="space-y-4">
+          <SectionHeader icon={Star} title="~/open source" />
+          <div className="space-y-3">
+            {OPENSOURCE_DATA.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
           </div>
