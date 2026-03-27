@@ -16,8 +16,8 @@ type SectionNode =
 const GRID_SECTIONS: SectionNode[] = [
   { type: 'static', id: 'about',      icon: User,       title: '~/about',       content: <AboutSection /> },
   { type: 'cards',  id: 'projects',   icon: FolderGit2, title: '~/projects',    data: PROJECTS_DATA },
-  { type: 'static', id: 'skills',     icon: Cpu,        title: '~/skills',      content: <SkillSection /> },
   { type: 'cards',  id: 'opensource', icon: Star,        title: '~/open source', data: OPENSOURCE_DATA },
+  { type: 'static', id: 'skills',     icon: Cpu,        title: '~/skills',      content: <SkillSection /> },
 ];
 
 const NOISE_URL = 'https://grainy-gradients.vercel.app/noise.svg';
