@@ -33,9 +33,9 @@ export const PROJECTS_DATA: Project[] = [
     title: 'R10 Minecraft 플러그인',
     period: '2022.12 — 현재',
     desc: [
-      'Java 기반 동시접속 20명+ 규모 게임 서버 운영',
-      '재고기반 시세 연산을 통한 유동가격 경제 시스템 개발',
-      '고빈도 이벤트 요청 방어 로직으로 서버 TPS 최적화 달성 (3 → 20)',
+      'Java 기반 게임 서버 아키텍처 구축 및 장기 운영',
+      '재고·수요 기반 유동 경제 시스템 로직 설계',
+      '반복 이벤트 차단 및 거래 연산 최적화로 TPS 개선 (3 → 20)',
     ],
     tech: ['Java', 'Ubuntu', 'Git'],
     links: [
@@ -58,9 +58,9 @@ export const PROJECTS_DATA: Project[] = [
     title: 'TradingView <-> Telegram 시세 알림 미들웨어',
     period: '2025.03 - 2025.06',
     desc: [
-      'TradingView-Telegram 연동 암호화폐 시세 알림 미들웨어 구축',
-      'Observer 패턴 기반 Event-Driven 구조 설계 및 운영',
-      'Thread Pool 기반 비동기 파이프라인 구축 및 대용량 트래픽 처리 경험',
+      '실시간 시세 데이터 처리를 위한 Event-Driven 미들웨어 구축',
+      'Observer 패턴 기반 확장형 아키텍처 설계',
+      '비동기 Multi-thread 파이프라인 구현 및 트래픽 처리',
     ],
     tech: ['Java', 'Git', 'Architect 설계'],
     links: [
@@ -77,9 +77,9 @@ export const PROJECTS_DATA: Project[] = [
     title: 'MFC 기반 반도체 장비 제어 SW',
     period: '2023.07 - 2025.01',
     desc: [
-      'MFC(C++) 기반 글로벌 반도체 6개국 고객사 대상 장비 제어 SW 개발',
-      '레거시 PLC 통신 구조를 블록 단위로 재설계하여 레이턴시 83% 단축 (3ms → 0.5ms)',
-      '문서 자동화 툴 개발(소요 시간 70% 단축) 및 팀 내 SVN 형상관리 도입 주도',
+      '글로벌 고객사 대응 MFC 기반 장비 제어 시스템 개발',
+      '통신 구조 분석 및 블록 단위 재설계 (latency 83% 단축)',
+      '반복 업무 프로세스 자동화 툴 구현 (소요 시간 93% 단축)',
     ],
     tech: ['C++', 'MFC', 'SVN'],
   },
@@ -95,9 +95,9 @@ export const OPENSOURCE_DATA: Project[] = [
     title: 'Wurst Client',
     period: '2022.12 - 현재',
     desc: [
-      'GitHub Star 1.4k+ Java 기반 게임 유틸리티 오픈소스 기여',
-      '채팅 후킹을 통한 Google Translate API 비동기 자동 번역 모듈 기여',
-      'GUI를 활용한 사용자가 직접 명령어를 지정하도록 리팩토링',
+      'GitHub 1.4k+ Java 오픈소스 프로젝트 핵심 기여',
+      '번역 API 연동 및 비동기 채팅 처리 모듈 설계·구현',
+      '기존 명령어 하드코딩 구조를 GUI 기반 상호작용으로 리팩토링',
     ],
     tech: ['Java', 'Git', 'Open Source'],
     links: [
