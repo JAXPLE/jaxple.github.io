@@ -46,7 +46,6 @@ export const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
         </ul>
       </div>
 
-      {/* 변경된 부분: h-8 대신 grid를 사용하고, 내부 absolute 대신 col-start-1 row-start-1 사용 */}
       <div className="relative ml-5 grid">
         <div
           className="col-start-1 row-start-1 flex flex-wrap gap-2 content-start transition-all duration-300 will-change-[opacity,transform]"
