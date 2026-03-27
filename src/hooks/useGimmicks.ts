@@ -8,7 +8,7 @@ export function useGimmicks() {
   const idleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    // Mouse spotlight tracking
+    // 마우스 이동 시 스포트라이트 위치 갱신 및 4초 유휴 감지
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
       setIdle(false);
@@ -16,7 +16,7 @@ export function useGimmicks() {
       idleTimer.current = setTimeout(() => setIdle(true), 4000);
     };
 
-    // Scroll progress bar
+    // 스크롤 진행도(%) 계산
     const handleScroll = () => {
       const totalScroll = document.documentElement.scrollTop;
       const windowHeight =
@@ -27,7 +27,7 @@ export function useGimmicks() {
       }
     };
 
-    // Konami-style secret: type "jaxple" to toggle hacker mode
+    // 키보드로 "jaxple" 입력 시 해커 모드 토글
     let keys: string[] = [];
     const secret = 'jaxple';
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -42,7 +42,7 @@ export function useGimmicks() {
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('keydown', handleKeyDown);
 
-    // Console easter egg for curious devs
+    // 개발자 도구 콘솔 이스터에그
     console.log(
       '%c Welcome in my Portfolio 🚀',
       'color: #10b981; font-size: 24px; font-weight: bold;'

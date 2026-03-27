@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { ChevronRight, Github, BookOpen } from 'lucide-react';
 
 interface LinkType {
@@ -24,6 +24,25 @@ interface ProjectCardProps {
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const [isActive, setIsActive] = useState(false);
   const [isTouch, setIsTouch] = useState(false);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isTouch || !cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const tiltX = (y - centerY) / 10;
+    const tiltY = (centerX - x) / 10;
+    setTilt({ x: tiltX, y: tiltY });
+  };
+
+  const handleMouseLeave = () => {
+    setIsActive(false);
+    setTilt({ x: 0, y: 0 });
+  };
 
   const getIcon = (type: string) => {
     if (type === 'github') return <Github size={14} />;
@@ -34,10 +53,15 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
   return (
     <div 
-      className={`relative p-4 md:p-5 rounded-xl border transition-all duration-500 cursor-default ${isActive ? 'border-[#52525b] bg-[#121214]' : 'border-[#27272a] bg-[#09090b]'}`}
+      ref={cardRef}
+      className={`relative p-4 md:p-5 rounded-xl border transition-all duration-300 cursor-default perspective-1000 ${isActive ? 'border-[#52525b] bg-[#121214] shadow-[0_20px_40px_rgba(0,0,0,0.3)]' : 'border-[#27272a] bg-[#09090b]'}`}
+      style={{
+        transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+      }}
       onTouchStart={() => setIsTouch(true)}
       onMouseEnter={() => { if (!isTouch) setIsActive(true); }}
-      onMouseLeave={() => { if (!isTouch) setIsActive(false); }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       onClick={() => { if (isTouch) setIsActive(!isActive); }}
     >
       <div className="flex justify-between items-start mb-2 relative z-10">
@@ -60,7 +84,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         )}
       </div>
       
-      {/* Tech Stack Region */}
+      {/* 기술 스택 */}
       <div className="relative ml-5">
         <div className={`flex flex-wrap gap-2 transition-all duration-500 ease-in-out ${hasLinks && isActive ? 'opacity-0 -translate-y-2 pointer-events-none' : 'opacity-100 pointer-events-auto'}`}>
           {project.tech.map((t) => (
@@ -70,7 +94,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           ))}
         </div>
 
-        {/* Hover Buttons Region (Absolute overlaying the tech stack) */}
+        {/* 활성화 시 링크 버튼 (기술 스택 위에 절대 위치) */}
         {hasLinks && (
           <div className={`absolute top-[-2px] left-0 flex flex-wrap gap-2 w-full transition-all duration-500 z-20 ${isActive ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-2 pointer-events-none'}`}>
             {project.links!.map((linkItem, idx) => (

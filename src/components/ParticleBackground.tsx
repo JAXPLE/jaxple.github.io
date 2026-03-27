@@ -42,7 +42,7 @@ export const ParticleBackground: React.FC<Props> = ({ hackerMode }) => {
     };
     window.addEventListener('mousemove', handleMouse);
 
-    // Init particles
+    // 파티클 초기화
     particles.current = Array.from({ length: PARTICLE_COUNT }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
@@ -61,12 +61,12 @@ export const ParticleBackground: React.FC<Props> = ({ hackerMode }) => {
       const accentColor = hackerMode ? '16, 185, 129' : '228, 228, 231';
 
       particles.current.forEach((p) => {
-        // Move
+        // 파티클 이동
         p.x += p.vx;
         p.y += p.vy;
         p.pulse += p.pulseSpeed;
 
-        // Mouse repel
+        // 마우스 반발 처리
         const dx = p.x - mouse.current.x;
         const dy = p.y - mouse.current.y;
         const distToMouse = Math.sqrt(dx * dx + dy * dy);
@@ -76,7 +76,7 @@ export const ParticleBackground: React.FC<Props> = ({ hackerMode }) => {
           p.vy += (dy / distToMouse) * force * 0.3;
         }
 
-        // Speed cap + damping
+        // 속도 상한 및 감쇠
         const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
         if (speed > 1.5) {
           p.vx = (p.vx / speed) * 1.5;
@@ -85,23 +85,23 @@ export const ParticleBackground: React.FC<Props> = ({ hackerMode }) => {
         p.vx *= 0.995;
         p.vy *= 0.995;
 
-        // Wrap edges
+        // 화면 경계 순환 (엣지 랩)
         if (p.x < 0) p.x = canvas.width;
         if (p.x > canvas.width) p.x = 0;
         if (p.y < 0) p.y = canvas.height;
         if (p.y > canvas.height) p.y = 0;
 
-        // Pulsing alpha
+        // 호흡하듯 투명도 진동
         const currentAlpha = p.alpha * (0.7 + 0.3 * Math.sin(p.pulse));
 
-        // Draw dot
+        // 파티클 점 렌더링
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${baseColor}, ${currentAlpha})`;
         ctx.fill();
       });
 
-      // Draw connections
+      // 파티클 간 연결선 렌더링
       for (let i = 0; i < particles.current.length; i++) {
         for (let j = i + 1; j < particles.current.length; j++) {
           const a = particles.current[i];
