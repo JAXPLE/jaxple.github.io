@@ -9,85 +9,64 @@ import { SkillSection } from './components/SkillSection';
 import { ParticleBackground } from './components/ParticleBackground';
 import { useGimmicks } from './hooks/useGimmicks';
 
-interface Section {
-  id: string;
-  icon: LucideIcon;
-  title: string;
-  content: React.ReactNode;
-}
+type SectionNode =
+  | { type: 'static'; id: string; icon: LucideIcon; title: string; content: React.ReactNode }
+  | { type: 'cards';  id: string; icon: LucideIcon; title: string; data: typeof PROJECTS_DATA };
 
-const sections: Section[] = [
-  {
-    id: 'about',
-    icon: User,
-    title: '~/about',
-    content: <AboutSection />,
-  },
+const GRID_SECTIONS: SectionNode[] = [
+  { type: 'static', id: 'about',      icon: User,       title: '~/about',       content: <AboutSection /> },
+  { type: 'cards',  id: 'projects',   icon: FolderGit2, title: '~/projects',    data: PROJECTS_DATA },
+  { type: 'static', id: 'skills',     icon: Cpu,        title: '~/skills',      content: <SkillSection /> },
+  { type: 'cards',  id: 'opensource', icon: Star,        title: '~/open source', data: OPENSOURCE_DATA },
 ];
+
+const NOISE_URL = 'https://grainy-gradients.vercel.app/noise.svg';
+
+const THEME = {
+  normal: { spotlight: 'rgba(255,255,255,0.08)', progress: 'bg-[#e4e4e7]', root: '' },
+  hacker: { spotlight: 'rgba(16,185,129,0.15)',  progress: 'bg-[#10b981]',  root: '!bg-[#021200] !text-[#10b981]' },
+} as const;
+
+function renderSection(node: SectionNode) {
+  if (node.type === 'cards') {
+    return (
+      <section key={node.id} className="space-y-4">
+        <SectionHeader icon={node.icon} title={node.title} />
+        <div className="space-y-3">
+          {node.data.map((p) => <ProjectCard key={p.id} project={p} />)}
+        </div>
+      </section>
+    );
+  }
+  return (
+    <section key={node.id} className="space-y-4">
+      <SectionHeader icon={node.icon} title={node.title} />
+      {node.content}
+    </section>
+  );
+}
 
 function App() {
   const { mousePosition, scrollProgress, hackerMode, idle } = useGimmicks();
-
-  const renderProjectSection = (icon: LucideIcon, title: string, data: typeof PROJECTS_DATA) => (
-    <section className="space-y-4">
-      <SectionHeader icon={icon} title={title} />
-      <div className="space-y-3">
-        {data.map((project) => (
-          <ProjectCard key={project.id} project={project} />
-        ))}
-      </div>
-    </section>
-  );
+  const theme = hackerMode ? THEME.hacker : THEME.normal;
 
   return (
-    <div
-      className={`relative min-h-screen bg-black text-[#a1a1aa] font-sans selection:bg-[#3f3f46] selection:text-white flex justify-center py-12 md:py-24 px-6 overflow-x-hidden transition-all duration-700 ${hackerMode ? '!bg-[#021200] !text-[#10b981]' : ''}`}
-    >
-      {/* 시네마틱 노이즈 그레인 */}
-      <div className="fixed inset-0 pointer-events-none z-[100] opacity-[0.03] mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-
-      {/* 스크롤 진행도 표시바 */}
-      <div
-        className={`fixed top-0 left-0 h-[2px] z-50 transition-all duration-150 ease-out ${hackerMode ? 'bg-[#10b981]' : 'bg-[#e4e4e7]'}`}
-        style={{ width: `${scrollProgress}%` }}
-      />
-
-      {/* 마우스 인터랙티브 스포트라이트 */}
+    <div className={`relative min-h-screen bg-black text-[#a1a1aa] font-sans selection:bg-[#3f3f46] selection:text-white flex justify-center py-12 md:py-24 px-6 overflow-x-hidden transition-all duration-700 ${theme.root}`}>
+      <div className={`fixed inset-0 pointer-events-none z-[100] opacity-[0.03] mix-blend-overlay bg-[url('${NOISE_URL}')]`} />
+      <div className={`fixed top-0 left-0 h-[2px] z-50 transition-all duration-150 ease-out ${theme.progress}`} style={{ width: `${scrollProgress}%` }} />
       <div
         className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-[2000ms]"
-        style={{
-          opacity: idle ? 0 : 1,
-          background: `radial-gradient(800px circle at ${mousePosition.x}px ${mousePosition.y}px, ${
-            hackerMode ? 'rgba(16, 185, 129, 0.15)' : 'rgba(255, 255, 255, 0.08)'
-          }, transparent 40%)`,
-        }}
+        style={{ opacity: idle ? 0 : 1, background: `radial-gradient(800px circle at ${mousePosition.x}px ${mousePosition.y}px, ${theme.spotlight}, transparent 40%)` }}
       />
-
-      {/* 파티클 네트워크 배경 */}
       <ParticleBackground hackerMode={hackerMode} />
 
-      <div className="w-full max-w-xl space-y-16 animate-fade-in relative z-10">
+      <div className="w-full max-w-5xl animate-fade-in relative z-10 space-y-12">
         <ProfileHeader />
-
-        {sections.map(({ id, icon, title, content }) => (
-          <section key={id} className="space-y-4">
-            <SectionHeader icon={icon} title={title} />
-            {content}
-          </section>
-        ))}
-
-        {renderProjectSection(FolderGit2, '~/projects', PROJECTS_DATA)}
-        {renderProjectSection(Star, '~/open source', OPENSOURCE_DATA)}
-
-        <section className="space-y-4">
-          <SectionHeader icon={Cpu} title="~/skills" />
-          <SkillSection />
-        </section>
-
-        <footer className="pt-8 flex justify-center text-[#52525b]">
-          <span className="font-mono text-[10px]">
-            ./EOF — © 2026 JwonLEE
-          </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-start">
+          {GRID_SECTIONS.map(renderSection)}
+        </div>
+        <footer className="pt-4 flex justify-center text-[#52525b]">
+          <span className="font-mono text-[10px]">./EOF</span>
         </footer>
       </div>
     </div>
@@ -95,4 +74,3 @@ function App() {
 }
 
 export default App;
-

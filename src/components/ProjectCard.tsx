@@ -1,104 +1,77 @@
 import React, { useState } from 'react';
 import { ChevronRight, Github, BookOpen } from 'lucide-react';
+import type { Project, ProjectLink } from '../data/portfolio';
 
-interface LinkType {
-  icon: string;
-  text: string;
-  url: string;
-  hoverClass: string;
-}
+const LINK_ICON_MAP: Record<ProjectLink['icon'], React.ReactNode> = {
+  github: <Github size={14} />,
+  notion: <BookOpen size={14} />,
+};
 
-interface ProjectType {
-  id: string;
-  title: string;
-  period: string;
-  desc: string | string[];
-  tech: string[];
-  links?: LinkType[];
-}
+const CARD_STYLE = {
+  inactive: 'border-[#27272a] bg-[#09090b]',
+  active:   'border-[#52525b] bg-[#121214] shadow-[0_8px_24px_rgba(0,0,0,0.3)]',
+} as const;
 
-interface ProjectCardProps {
-  project: ProjectType;
-}
+const OVERLAY_STYLE = (visible: boolean) => ({
+  opacity:       visible ? 1 : 0,
+  transform:     visible ? 'translateY(0)' : 'translateY(4px)',
+  pointerEvents: (visible ? 'auto' : 'none') as React.CSSProperties['pointerEvents'],
+});
 
-export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+export const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
   const [isActive, setIsActive] = useState(false);
-  const [isTouch, setIsTouch] = useState(false);
+  const [isTouch,  setIsTouch]  = useState(false);
 
-  const getIcon = (type: string) => {
-    if (type === 'github') return <Github size={14} />;
-    return <BookOpen size={14} />;
-  };
-
-  const hasLinks = project.links && project.links.length > 0;
+  const hasLinks = !!project.links?.length;
 
   return (
-    <div 
-      className={`relative p-4 md:p-5 rounded-xl border transition-all duration-300 cursor-default ${isActive ? 'border-[#52525b] bg-[#121214] shadow-[0_8px_24px_rgba(0,0,0,0.3)]' : 'border-[#27272a] bg-[#09090b]'}`}
+    <div
+      className={`relative p-4 md:p-5 rounded-xl border transition-all duration-300 cursor-default ${isActive ? CARD_STYLE.active : CARD_STYLE.inactive}`}
       onTouchStart={() => setIsTouch(true)}
-      onMouseEnter={() => { if (!isTouch) setIsActive(true); }}
+      onMouseEnter={() => { if (!isTouch) setIsActive(true);  }}
       onMouseLeave={() => { if (!isTouch) setIsActive(false); }}
-      onClick={() => { if (isTouch) setIsActive(!isActive); }}
+      onClick={()   => { if (isTouch)  setIsActive(!isActive); }}
     >
-      <div className="flex justify-between items-start mb-2 relative z-10">
+      <div className="flex justify-between items-start mb-2">
         <h3 className={`font-medium flex items-center gap-2 transition-colors ${isActive ? 'text-green-400' : 'text-white'}`}>
           <ChevronRight size={14} className={`transition-all duration-300 ${isActive ? 'text-green-400 translate-x-1' : 'text-[#52525b]'}`} />
           {project.title}
         </h3>
         <span className="font-mono text-[10px] text-[#52525b] mt-1 shrink-0 ml-2">{project.period}</span>
       </div>
-      
-      <div className={`text-sm ml-5 leading-relaxed mb-4 relative z-10 transition-colors duration-500 ${isActive ? 'text-[#d4d4d8]' : 'text-[#a1a1aa]'}`}>
-        {Array.isArray(project.desc) ? (
-          <ul className="list-disc pl-4 space-y-1.5 marker:text-[#52525b]">
-            {project.desc.map((line, i) => (
-              <li key={i}>{line}</li>
-            ))}
-          </ul>
-        ) : (
-          <p>{project.desc}</p>
-        )}
+
+      <div className={`text-sm ml-5 leading-relaxed mb-4 transition-colors duration-500 ${isActive ? 'text-[#d4d4d8]' : 'text-[#a1a1aa]'}`}>
+        <ul className="list-disc pl-4 space-y-1.5 marker:text-[#52525b]">
+          {project.desc.map((line, i) => <li key={i}>{line}</li>)}
+        </ul>
       </div>
-      
-      {/* 기술 스택 / 링크 전환 영역 */}
+
       <div className="relative ml-5 h-8">
-        {/* 기술 스택 태그 */}
         <div
           className="absolute inset-0 flex flex-wrap gap-2 content-start transition-all duration-300 will-change-[opacity,transform]"
-          style={{
-            opacity: hasLinks && isActive ? 0 : 1,
-            transform: hasLinks && isActive ? 'translateY(-4px)' : 'translateY(0)',
-            pointerEvents: hasLinks && isActive ? 'none' : 'auto',
-          }}
+          style={OVERLAY_STYLE(!hasLinks || !isActive)}
         >
           {project.tech.map((t) => (
-            <span key={t} className="font-mono text-[10px] px-2 py-1 rounded-md bg-[#18181b] border border-[#27272a] text-[#d4d4d8]">
-              {t}
-            </span>
+            <span key={t} className="font-mono text-[10px] px-2 py-1 rounded-md bg-[#18181b] border border-[#27272a] text-[#d4d4d8]">{t}</span>
           ))}
         </div>
 
-        {/* 활성화 시 링크 버튼 */}
         {hasLinks && (
           <div
             className="absolute inset-0 flex flex-wrap gap-2 content-start transition-all duration-300 will-change-[opacity,transform]"
-            style={{
-              opacity: isActive ? 1 : 0,
-              transform: isActive ? 'translateY(0)' : 'translateY(4px)',
-              pointerEvents: isActive ? 'auto' : 'none',
-            }}
+            style={OVERLAY_STYLE(isActive)}
           >
-            {project.links!.map((linkItem, idx) => (
+            {project.links!.map((link, i) => (
               <a
-                key={idx}
-                href={linkItem.url}
+                key={i}
+                href={link.url}
                 target="_blank"
                 rel="noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#27272a]/95 border border-[#3f3f46] text-[#e4e4e7] text-[10px] font-mono font-medium transition-all duration-200 hover:scale-[1.03] ${linkItem.hoverClass}`}
+                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#27272a]/95 border border-[#3f3f46] text-[#e4e4e7] text-[10px] font-mono font-medium transition-all duration-200 hover:scale-[1.03] ${link.hoverClass}`}
               >
-                {getIcon(linkItem.icon)}
-                {linkItem.text}
+                {LINK_ICON_MAP[link.icon]}
+                {link.text}
               </a>
             ))}
           </div>
