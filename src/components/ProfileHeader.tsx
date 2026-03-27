@@ -1,10 +1,6 @@
 import { Github, Linkedin, Mail } from 'lucide-react';
 
-interface ProfileHeaderProps {
-  cursorVisible: boolean;
-}
-
-export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ cursorVisible }) => (
+export const ProfileHeader: React.FC = () => (
   <header className="flex flex-col items-center text-center space-y-6">
     <div className="w-24 h-24 rounded-full border-2 border-[#27272a] shadow-[0_0_30px_rgba(255,255,255,0.05)] relative p-1 bg-[#18181b]">
       <img src="https://avatars.githubusercontent.com/u/114869036?v=4" alt="Profile" className="w-full h-full rounded-full object-cover" />
