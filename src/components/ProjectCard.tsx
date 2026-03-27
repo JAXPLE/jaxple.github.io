@@ -46,9 +46,10 @@ export const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
         </ul>
       </div>
 
-      <div className="relative ml-5 h-8">
+      {/* 변경된 부분: h-8 대신 grid를 사용하고, 내부 absolute 대신 col-start-1 row-start-1 사용 */}
+      <div className="relative ml-5 grid">
         <div
-          className="absolute inset-0 flex flex-wrap gap-2 content-start transition-all duration-300 will-change-[opacity,transform]"
+          className="col-start-1 row-start-1 flex flex-wrap gap-2 content-start transition-all duration-300 will-change-[opacity,transform]"
           style={OVERLAY_STYLE(!hasLinks || !isActive)}
         >
           {project.tech.map((t) => (
@@ -58,7 +59,7 @@ export const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
 
         {hasLinks && (
           <div
-            className="absolute inset-0 flex flex-wrap gap-2 content-start transition-all duration-300 will-change-[opacity,transform]"
+            className="col-start-1 row-start-1 flex flex-wrap gap-2 content-start transition-all duration-300 will-change-[opacity,transform]"
             style={OVERLAY_STYLE(isActive)}
           >
             {project.links!.map((link, i) => (
