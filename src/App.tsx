@@ -16,8 +16,8 @@ type SectionNode =
 const GRID_SECTIONS: SectionNode[] = [
   { type: 'static', id: 'about',      icon: User,       title: '~/about',       content: <AboutSection /> },
   { type: 'cards',  id: 'projects',   icon: FolderGit2, title: '~/projects',    data: PROJECTS_DATA },
-  { type: 'cards',  id: 'opensource', icon: Star,        title: '~/open source', data: OPENSOURCE_DATA },
   { type: 'static', id: 'skills',     icon: Cpu,        title: '~/skills',      content: <SkillSection /> },
+  { type: 'cards',  id: 'opensource', icon: Star,        title: '~/open source', data: OPENSOURCE_DATA },
 ];
 
 const NOISE_URL = 'https://grainy-gradients.vercel.app/noise.svg';
@@ -63,7 +63,14 @@ function App() {
       <div className="w-full max-w-5xl animate-fade-in relative z-10 space-y-12">
         <ProfileHeader />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-start">
-          {GRID_SECTIONS.map(renderSection)}
+          <div className="space-y-8 md:space-y-10">
+            {renderSection(GRID_SECTIONS[0])}
+            {renderSection(GRID_SECTIONS[2])}
+          </div>
+          <div className="space-y-8 md:space-y-10">
+            {renderSection(GRID_SECTIONS[1])}
+            {renderSection(GRID_SECTIONS[3])}
+          </div>
         </div>
         <footer className="pt-4 flex justify-center text-[#52525b]">
           <span className="font-mono text-[10px]">./EOF</span>
