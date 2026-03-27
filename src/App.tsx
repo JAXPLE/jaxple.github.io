@@ -67,13 +67,7 @@ function App() {
       <ParticleBackground hackerMode={hackerMode} />
 
       <div className="w-full max-w-xl space-y-16 animate-fade-in relative z-10">
-        {/* 마그네틱 프로필 헤더 */}
-        <div style={{ 
-          transform: `translate(${(mousePosition.x - window.innerWidth / 2) * 0.01}px, ${(mousePosition.y - window.innerHeight / 2) * 0.01}px)`,
-          transition: 'transform 0.2s ease-out'
-        }}>
-          <ProfileHeader />
-        </div>
+        <ProfileHeader />
 
         {sections.map(({ id, icon, title, content }) => (
           <section key={id} className="space-y-4">

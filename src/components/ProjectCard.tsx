@@ -60,9 +60,17 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         )}
       </div>
       
-      {/* 기술 스택 */}
-      <div className="ml-5">
-        <div className={`flex flex-wrap gap-2 transition-all duration-500 ease-in-out ${hasLinks && isActive ? 'opacity-0 max-h-0 overflow-hidden pointer-events-none mb-0' : 'opacity-100 max-h-40 pointer-events-auto'}`}>
+      {/* 기술 스택 / 링크 전환 영역 */}
+      <div className="relative ml-5 h-8">
+        {/* 기술 스택 태그 */}
+        <div
+          className="absolute inset-0 flex flex-wrap gap-2 content-start transition-all duration-300 will-change-[opacity,transform]"
+          style={{
+            opacity: hasLinks && isActive ? 0 : 1,
+            transform: hasLinks && isActive ? 'translateY(-4px)' : 'translateY(0)',
+            pointerEvents: hasLinks && isActive ? 'none' : 'auto',
+          }}
+        >
           {project.tech.map((t) => (
             <span key={t} className="font-mono text-[10px] px-2 py-1 rounded-md bg-[#18181b] border border-[#27272a] text-[#d4d4d8]">
               {t}
@@ -72,15 +80,22 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
         {/* 활성화 시 링크 버튼 */}
         {hasLinks && (
-          <div className={`flex flex-wrap gap-2 transition-all duration-500 ${isActive ? 'opacity-100 max-h-40 pointer-events-auto' : 'opacity-0 max-h-0 overflow-hidden pointer-events-none'}`}>
+          <div
+            className="absolute inset-0 flex flex-wrap gap-2 content-start transition-all duration-300 will-change-[opacity,transform]"
+            style={{
+              opacity: isActive ? 1 : 0,
+              transform: isActive ? 'translateY(0)' : 'translateY(4px)',
+              pointerEvents: isActive ? 'auto' : 'none',
+            }}
+          >
             {project.links!.map((linkItem, idx) => (
-              <a 
+              <a
                 key={idx}
-                href={linkItem.url} 
-                target="_blank" 
+                href={linkItem.url}
+                target="_blank"
                 rel="noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className={`inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-lg bg-[#27272a]/95 backdrop-blur-sm border border-[#3f3f46] text-[#e4e4e7] text-xs font-mono font-medium shadow-xl transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] ${linkItem.hoverClass}`}
+                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#27272a]/95 border border-[#3f3f46] text-[#e4e4e7] text-[10px] font-mono font-medium transition-all duration-200 hover:scale-[1.03] ${linkItem.hoverClass}`}
               >
                 {getIcon(linkItem.icon)}
                 {linkItem.text}
