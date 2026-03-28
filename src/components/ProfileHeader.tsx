@@ -6,9 +6,33 @@ export const ProfileHeader: React.FC = () => {
   const [spinCount, setSpinCount] = useState(0);
   const [copied, setCopied] = useState(false);
 
-  const handleCopyEmail = (e: React.MouseEvent) => {
+  const handleCopyEmail = async (e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
-    navigator.clipboard.writeText('jaxple@gmail.com');
+    const email = 'jaxple@gmail.com';
+
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(email);
+      } else {
+        throw new Error('Clipboard API unavailable');
+      }
+    } catch (err) {
+      const textArea = document.createElement('textarea');
+      textArea.value = email;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-9999px';
+      textArea.style.top = '0';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+      } catch (copyErr) {
+        console.error('Fallback copy failed', copyErr);
+      }
+      document.body.removeChild(textArea);
+    }
+
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
