@@ -112,7 +112,7 @@ export const OPENSOURCE_DATA: Project[] = [
 ];
 
 export const SKILLS_DATA: Skill[] = [
-  { category: 'Language',  items: 'Java, C++' },
+  { category: 'Language', items: 'Java, C++' },
   { category: 'Framework', items: 'MFC' },
-  { category: 'Infra',     items: 'Ubuntu, Tortoise Svn, Git' },
+  { category: 'Tool', items: 'Visual Studio, Visual Studio Code, Tortoise SVN, GitHub' },
 ];
