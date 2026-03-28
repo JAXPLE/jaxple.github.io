@@ -1,4 +1,4 @@
-import { FolderGit2, Cpu, User, Star, type LucideIcon } from 'lucide-react';
+
 
 import { PROJECTS_DATA, OPENSOURCE_DATA } from './data/portfolio';
 import { ProfileHeader } from './components/ProfileHeader';
