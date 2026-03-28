@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronRight, Github, BookOpen } from 'lucide-react';
 import type { Project, ProjectLink } from '../data/portfolio';
+import { BorderBeam } from './BorderBeam';
 
 const LINK_ICON_MAP: Record<ProjectLink['icon'], React.ReactNode> = {
   github: <Github size={14} />,
@@ -9,7 +10,7 @@ const LINK_ICON_MAP: Record<ProjectLink['icon'], React.ReactNode> = {
 
 const CARD_STYLE = {
   inactive: 'border-white/5 bg-[#09090b]/50 backdrop-blur-sm',
-  active:   'border-white/40 bg-[#18181b] shadow-[0_20px_50px_rgba(0,0,0,0.6)] scale-[1.01] ring-1 ring-white/20',
+  active:   'border-white/40 bg-[#18181b] shadow-[0_40px_80px_rgba(0,0,0,0.6)] scale-[1.02] ring-1 ring-white/20',
 } as const;
 
 export const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
@@ -42,23 +43,7 @@ export const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
       onMouseLeave={() => { if (!isTouch) setIsActive(false); }}
       onClick={()   => { if (isTouch)  setIsActive(!isActive); }}
     >
-      {/* Border Beam Effect */}
-      {isActive && (
-        <div 
-          className="absolute inset-0 rounded-2xl pointer-events-none overflow-hidden z-0"
-          style={{ 
-            maskImage: 'linear-gradient(black, black), linear-gradient(black, black)', 
-            maskClip: 'content-box, border-box', 
-            WebkitMaskComposite: 'xor',
-            maskComposite: 'exclude', 
-            padding: '1.5px' 
-          }}
-        >
-          <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_0,rgba(255,255,255,0.8)_10%,transparent_20%)] animate-border-beam" />
-        </div>
-      )}
-
-      <div className="relative z-10 flex flex-col">
+      <div className="relative z-10 flex flex-col h-full">
         <div className="flex justify-between items-start mb-3">
           <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
             <h3 className={`text-lg font-bold tracking-tight transition-all duration-300 ${isActive ? 'text-white' : 'text-[#e4e4e7]'}`}>
@@ -69,7 +54,15 @@ export const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
           <ChevronRight size={16} className={`transition-all duration-500 ${isActive ? 'text-white rotate-90' : 'text-[#27272a] opacity-0'}`} />
         </div>
 
-        <div className={`text-sm leading-relaxed mb-4 transition-colors duration-500 ${isActive ? 'text-[#e4e4e7]' : 'text-[#a1a1aa]'}`}>
+        <div className="flex flex-wrap gap-1.5 items-center mb-4 transition-all duration-500">
+          {project.tech.map((t) => (
+            <span key={t} className={`font-mono text-[11px] px-2.5 py-1 rounded-full bg-white/[0.03] border transition-all ${isActive ? 'text-[#a1a1aa] border-white/20' : 'text-[#71717a] border-white/10'}`}>
+              {t}
+            </span>
+          ))}
+        </div>
+
+        <div className={`text-sm leading-relaxed mb-1 transition-colors duration-500 ${isActive ? 'text-[#e4e4e7]' : 'text-[#a1a1aa]'}`}>
           <ul className="space-y-1.5">
             {project.desc.map((line, i) => (
               <li key={i} className="flex gap-2">
@@ -80,44 +73,37 @@ export const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
           </ul>
         </div>
 
-        <div className="mt-auto space-y-3">
-          <div className="flex flex-wrap gap-1.5 items-center">
-            {project.tech.map((t) => (
-              <span key={t} className={`font-mono text-[11px] px-2.5 py-1 rounded-full bg-white/[0.03] border transition-all ${isActive ? 'text-[#a1a1aa] border-white/20' : 'text-[#71717a] border-white/10'}`}>
-                {t}
-              </span>
-            ))}
-          </div>
-
-          <div 
-            className={`grid transition-all duration-700 ease-in-out ${isActive ? 'grid-rows-[1fr] opacity-100 mt-4' : 'grid-rows-[0fr] opacity-0 mt-0'}`}
-          >
-            <div className="overflow-hidden">
-              {hasLinks && (
-                <div className={`flex justify-end gap-2.5 pb-1 transition-all duration-700 ${isActive ? 'translate-y-0 opacity-100 delay-300' : 'translate-y-4 opacity-0'}`}>
-                  {project.links!.map((link, i) => (
-                    <a
-                      key={i}
-                      href={link.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      className={`flex items-center gap-1.5 px-4 py-2 rounded-xl border text-xs font-mono font-bold transition-all duration-300 ${link.hoverClass} border-white/5 bg-white/[0.03] hover:scale-110 group/link shadow-md`}
-                    >
-                      <span className="opacity-60 group-hover/link:opacity-100 transition-opacity">
-                        {LINK_ICON_MAP[link.icon]}
-                      </span>
-                      <span className="opacity-60 group-hover/link:opacity-100 transition-opacity whitespace-nowrap">
-                        {link.text}
-                      </span>
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
+        <div
+          className={`grid transition-all duration-700 ease-in-out ${isActive ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
+        >
+          <div className="min-h-0 overflow-hidden">
+            {hasLinks && (
+              <div className={`flex flex-wrap justify-end gap-3 px-2 pb-4 pt-5 transition-all duration-700 ${isActive ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
+                {project.links!.map((link, i) => (
+                  <a
+                    key={i}
+                    href={link.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className={`group/link relative flex items-center justify-center sm:justify-start gap-3 px-5 py-3 rounded-xl border text-[13px] font-mono font-bold transition-all duration-300 ${link.hoverClass} border-white/5 bg-white/[0.03] hover:scale-[1.05] shadow-xl overflow-hidden w-full sm:w-auto hover:border-white/20`}
+                  >
+                    <BorderBeam intensity="high" alwaysOn />
+                    <span className={`relative z-10 transition-colors duration-300 ${isActive ? 'opacity-100 text-white group-hover/link:text-white' : 'opacity-60 group-hover/link:opacity-100 group-hover/link:text-white'}`}>
+                      {LINK_ICON_MAP[link.icon]}
+                    </span>
+                    <span className={`relative z-10 transition-colors duration-300 whitespace-nowrap ${isActive ? 'opacity-100 text-white group-hover/link:text-white' : 'opacity-60 group-hover/link:opacity-100 group-hover/link:text-white'}`}>
+                      {link.text}
+                    </span>
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
+
+      <BorderBeam visible={isActive} rounded="rounded-2xl" padding="1px" />
     </div>
   );
 };

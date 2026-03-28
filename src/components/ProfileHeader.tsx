@@ -1,5 +1,6 @@
 import { Github, Linkedin, Mail, Check } from 'lucide-react';
 import React, { useState } from 'react';
+import { BorderBeam } from './BorderBeam';
 
 export const ProfileHeader: React.FC = () => {
   const [spinCount, setSpinCount] = useState(0);
@@ -14,10 +15,10 @@ export const ProfileHeader: React.FC = () => {
 
   return (
   <header className="w-full flex flex-col items-center text-center space-y-8 py-4">
-    <div 
+    <div
       onClick={() => setSpinCount(s => s + 1)}
       className="group w-28 h-28 rounded-full border border-white/10 shadow-[0_0_50px_rgba(255,255,255,0.03)] relative p-1.5 bg-[#09090b] cursor-pointer transition-all duration-700 hover:border-white/20"
-      style={{ 
+      style={{
         transform: `rotate(${spinCount * 360}deg)`,
         transition: 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
       }}
@@ -27,7 +28,7 @@ export const ProfileHeader: React.FC = () => {
       <img src="https://avatars.githubusercontent.com/u/114869036?v=4" alt="Profile" className="w-full h-full rounded-full object-cover group-hover:scale-[1.02] transition-transform duration-700 relative z-10" />
       <div className="absolute bottom-2 right-2 w-5 h-5 bg-[#10b981] rounded-full border-[4px] border-[#09090b] z-20 shadow-[0_0_15px_rgba(16,185,129,0.4)]"></div>
     </div>
-    
+
     <div className="space-y-3">
       <h1 className="text-5xl md:text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-[#a1a1aa]">
         이재원
@@ -47,31 +48,34 @@ export const ProfileHeader: React.FC = () => {
     </p>
 
     <div className="flex flex-col sm:flex-row gap-3 pt-4 items-center justify-center w-full">
-      <button 
+      <button
         onClick={handleCopyEmail}
-        className={`w-full sm:w-auto group flex items-center justify-center h-11 px-5 rounded-xl bg-white/[0.03] border transition-all duration-300 ${copied ? 'border-green-500/50 bg-green-500/10' : 'border-white/5 hover:bg-[#0ea5e9]/10 hover:border-[#0ea5e9]/30'}`}
+        className={`relative overflow-hidden w-full sm:w-auto group flex items-center justify-center h-11 px-5 rounded-xl bg-white/[0.03] border transition-all duration-300 ${copied ? 'border-green-500/50 bg-green-500/10' : 'border-white/5 hover:bg-[#EA4335] hover:border-[#EA4335]'}`}
         aria-label="Email"
       >
+        <BorderBeam intensity="high" />
         {copied ? (
-          <Check size={16} className="text-green-400 mr-2.5 animate-in zoom-in duration-300" />
+          <Check size={16} className="relative z-10 text-green-400 mr-2.5 animate-in zoom-in duration-300" />
         ) : (
-          <Mail size={16} className="text-[#a1a1aa] group-hover:text-[#0ea5e9] transition-colors" />
+          <Mail size={16} className="relative z-10 text-[#a1a1aa] group-hover:text-white transition-colors" />
         )}
-        <span className={`font-mono text-xs font-semibold whitespace-nowrap transition-colors ${copied ? 'text-green-400' : 'text-[#a1a1aa] group-hover:text-white'} ml-2.5 outline-none`}>
+        <span className={`relative z-10 font-mono text-xs font-semibold whitespace-nowrap transition-colors ${copied ? 'text-green-400' : 'text-[#a1a1aa] group-hover:text-white'} ml-2.5 outline-none`}>
           {copied ? '복사완료!' : 'jaxple@gmail.com'}
         </span>
       </button>
-      
-      <a href="https://github.com/JAXPLE" target="_blank" rel="noreferrer" className="w-full sm:w-auto group flex items-center justify-center h-11 px-5 rounded-xl bg-white/[0.03] border border-white/5 hover:bg-white/10 hover:border-white/20 transition-all duration-300" aria-label="GitHub">
-        <Github size={16} className="text-[#a1a1aa] group-hover:text-white transition-colors" />
-        <span className="font-mono text-xs font-semibold text-[#a1a1aa] group-hover:text-white transition-colors ml-2.5 outline-none whitespace-nowrap">
+
+      <a href="https://github.com/JAXPLE" target="_blank" rel="noreferrer" className="relative overflow-hidden w-full sm:w-auto group flex items-center justify-center h-11 px-5 rounded-xl bg-white/[0.03] border border-white/5 hover:bg-[#24292e] hover:border-[#24292e] transition-all duration-300" aria-label="GitHub">
+        <BorderBeam intensity="high" />
+        <Github size={16} className="relative z-10 text-[#a1a1aa] group-hover:text-white transition-colors" />
+        <span className="relative z-10 font-mono text-xs font-semibold text-[#a1a1aa] group-hover:text-white transition-colors ml-2.5 outline-none whitespace-nowrap">
           JAXPLE
         </span>
       </a>
-      
-      <a href="https://www.linkedin.com/in/jaxple" target="_blank" rel="noreferrer" className="w-full sm:w-auto group flex items-center justify-center h-11 px-5 rounded-xl bg-white/[0.03] border border-white/5 hover:bg-[#0A66C2]/10 hover:border-[#0A66C2]/30 transition-all duration-300" aria-label="LinkedIn">
-        <Linkedin size={16} className="text-[#a1a1aa] group-hover:text-[#0A66C2] transition-colors" />
-        <span className="font-mono text-xs font-semibold text-[#a1a1aa] group-hover:text-white transition-colors ml-2.5 outline-none whitespace-nowrap">
+
+      <a href="https://www.linkedin.com/in/jaxple" target="_blank" rel="noreferrer" className="relative overflow-hidden w-full sm:w-auto group flex items-center justify-center h-11 px-5 rounded-xl bg-white/[0.03] border border-white/5 hover:bg-[#0A66C2] hover:border-[#0A66C2] transition-all duration-300" aria-label="LinkedIn">
+        <BorderBeam intensity="high" />
+        <Linkedin size={16} className="relative z-10 text-[#a1a1aa] group-hover:text-white transition-colors" />
+        <span className="relative z-10 font-mono text-xs font-semibold text-[#a1a1aa] group-hover:text-white transition-colors ml-2.5 outline-none whitespace-nowrap">
           in/jaxple
         </span>
       </a>

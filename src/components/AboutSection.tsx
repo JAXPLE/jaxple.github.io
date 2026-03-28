@@ -1,5 +1,6 @@
 import React from 'react';
 import { Target, Zap, Cpu } from 'lucide-react';
+import { HoverCard } from './HoverCard';
 
 export const AboutSection: React.FC = () => {
   const highlights = [
@@ -21,33 +22,26 @@ export const AboutSection: React.FC = () => {
   ];
 
   const scrollToProject = (id: string) => {
-    // 1. Dispatch custom event to activate the target card first
     window.dispatchEvent(new CustomEvent('highlight-project', { detail: { id } }));
-    
-    // 2. Wait a tiny bit for the expansion to start, then scroll for better precision
     setTimeout(() => {
       const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
   };
 
   return (
     <div className="space-y-4">
       {highlights.map((item, i) => (
-        <button 
-          key={i} 
-          onClick={() => scrollToProject(item.id)}
-          className="w-full flex gap-4 items-start group text-left transition-transform active:scale-[0.98]"
-        >
-          <div className="mt-1 p-2 rounded-lg bg-white/5 border border-white/10 group-hover:border-white/20 transition-colors">
-            {item.icon}
+        <HoverCard key={i} className="cursor-pointer" onClick={() => scrollToProject(item.id)}>
+          <div className="w-full flex gap-4 items-start p-4 text-left transition-transform active:scale-[0.98]">
+            <div className="mt-1 p-2 rounded-lg bg-white/5 border border-white/10 transition-colors shrink-0">
+              {item.icon}
+            </div>
+            <p className="text-sm md:text-base text-[#71717a] font-medium leading-relaxed group-hover:text-[#a1a1aa] transition-colors">
+              {item.text}
+            </p>
           </div>
-          <p className="text-sm md:text-base text-[#71717a] font-medium leading-relaxed group-hover:text-[#a1a1aa] transition-colors">
-            {item.text}
-          </p>
-        </button>
+        </HoverCard>
       ))}
     </div>
   );

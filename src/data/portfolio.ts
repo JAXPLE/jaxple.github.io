@@ -1,7 +1,3 @@
-// =============================================================================
-// 타입 정의 — 모든 소비자가 이 파일 하나만 참조
-// =============================================================================
-
 export interface ProjectLink {
   icon: 'github' | 'notion';
   text: string;
@@ -23,10 +19,6 @@ export interface Skill {
   items: string;
 }
 
-// =============================================================================
-// 프로젝트 데이터
-// =============================================================================
-
 export const PROJECTS_DATA: Project[] = [
   {
     id: 'dalso',
@@ -43,19 +35,19 @@ export const PROJECTS_DATA: Project[] = [
         icon: 'notion',
         text: 'docs',
         url: 'https://jaxple.notion.site/1e892da7e82180bda9f4d43c84200f97?source=copy_link',
-        hoverClass: 'hover:bg-gray-300 hover:text-black hover:border-gray-300',
+        hoverClass: 'hover:bg-black hover:border-black',
       },
       {
         icon: 'github',
         text: '기반 code',
         url: 'https://github.com/JAXPLE/R10-PUBLIC',
-        hoverClass: 'hover:bg-white hover:text-black hover:border-white',
+        hoverClass: 'hover:bg-[#24292e] hover:border-[#24292e]',
       },
       {
         icon: 'notion',
         text: '코드 docs',
         url: 'https://jaxple.notion.site/R10-Project-1ae92da7e82181e6b595d3dd3128d484',
-        hoverClass: 'hover:bg-gray-300 hover:text-black hover:border-gray-300',
+        hoverClass: 'hover:bg-black hover:border-black',
       },
     ],
   },
@@ -74,7 +66,7 @@ export const PROJECTS_DATA: Project[] = [
         icon: 'notion',
         text: 'docs',
         url: 'https://jaxple.notion.site/COSMOS-Project-23592da7e821809dab4eea238f51fd43?source=copy_link',
-        hoverClass: 'hover:bg-gray-300 hover:text-black hover:border-gray-300',
+        hoverClass: 'hover:bg-black hover:border-black',
       },
     ],
   },
@@ -90,10 +82,6 @@ export const PROJECTS_DATA: Project[] = [
     tech: ['C++', 'MFC', 'SVN'],
   },
 ];
-
-// =============================================================================
-// 오픈소스 기여 데이터
-// =============================================================================
 
 export const OPENSOURCE_DATA: Project[] = [
   {
@@ -111,21 +99,17 @@ export const OPENSOURCE_DATA: Project[] = [
         icon: 'github',
         text: '비동기 채팅 번역 모듈 PR',
         url: 'https://github.com/Wurst-Imperium/Wurst7/pull/1021',
-        hoverClass: 'hover:bg-white hover:text-black hover:border-white',
+        hoverClass: 'hover:bg-[#24292e] hover:border-[#24292e]',
       },
       {
         icon: 'github',
         text: 'GUI로 개선한 텔레포트 모듈 PR',
         url: 'https://github.com/Wurst-Imperium/Wurst7/pull/899',
-        hoverClass: 'hover:bg-white hover:text-black hover:border-white',
+        hoverClass: 'hover:bg-[#24292e] hover:border-[#24292e]',
       },
     ],
   },
 ];
-
-// =============================================================================
-// 기술 스택 데이터
-// =============================================================================
 
 export const SKILLS_DATA: Skill[] = [
   { category: 'Language',  items: 'Java, C++' },
