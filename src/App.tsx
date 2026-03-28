@@ -5,7 +5,7 @@ import { AboutSection } from './components/AboutSection';
 import { ProjectCard } from './components/ProjectCard';
 import { SkillSection } from './components/SkillSection';
 import { ParticleBackground } from './components/ParticleBackground';
-
+import { ViewCounter } from './components/ViewCounter';
 import { useGimmicks } from './hooks/useGimmicks';
 
 type SectionNode =
@@ -80,7 +80,8 @@ function App() {
           </div>
         </div>
 
-        <footer className="pt-12 flex justify-center text-[#3f3f46]">
+        <footer className="pt-12 pb-8 flex flex-col items-center gap-6 text-[#3f3f46]">
+          <ViewCounter />
           <span className="font-mono text-[10px] tracking-wider">./EOF</span>
         </footer>
       </div>

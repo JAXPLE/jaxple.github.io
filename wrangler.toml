@@ -8,3 +8,7 @@ ENVIRONMENT = "production"
 [[routes]]
 pattern = "jaxple.dev/*"
 zone_name = "jaxple.dev"
+
+[[kv_namespaces]]
+binding = "VIEWS_KV"
+id = "1819596efa8546ceb613fe0b0d732ebc"

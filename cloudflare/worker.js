@@ -56,8 +56,67 @@ class ContentCleaner {
   }
 }
 
+async function getKstDateString() {
+  const date = new Date();
+  date.setUTCHours(date.getUTCHours() + 9); // KST is UTC+9
+  return date.toISOString().split('T')[0];
+}
+
+async function handleViewsApi(request) {
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Content-Type': 'application/json'
+  };
+
+  if (request.method === 'OPTIONS') {
+    return new Response(null, { headers: corsHeaders });
+  }
+
+  if (typeof VIEWS_KV === 'undefined') {
+    return new Response(JSON.stringify({ error: 'KV not configured', total: 0, daily: 0 }), {
+      status: 200,
+      headers: corsHeaders
+    });
+  }
+
+  try {
+    const todayStr = await getKstDateString();
+    const totalKey = 'views:total';
+    const dailyKey = `views:daily:${todayStr}`;
+
+    let total = parseInt(await VIEWS_KV.get(totalKey)) || 0;
+    let daily = parseInt(await VIEWS_KV.get(dailyKey)) || 0;
+
+    if (request.method === 'POST') {
+      total += 1;
+      daily += 1;
+      await Promise.all([
+        VIEWS_KV.put(totalKey, total.toString()),
+        VIEWS_KV.put(dailyKey, daily.toString())
+      ]);
+    }
+
+    return new Response(JSON.stringify({ total, daily }), {
+      status: 200,
+      headers: corsHeaders
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ error: error.message, total: 0, daily: 0 }), {
+      status: 500,
+      headers: corsHeaders
+    });
+  }
+}
+
 async function handleRequest(request) {
   const url = new URL(request.url);
+  
+  if (url.pathname === '/api/views') {
+    return handleViewsApi(request);
+  }
+
   const userAgent = request.headers.get('User-Agent') || '';
   if (isBot(userAgent)) {
     return new Response('Access Denied', { status: 403 });
