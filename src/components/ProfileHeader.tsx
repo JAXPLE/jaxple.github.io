@@ -19,6 +19,7 @@ export const ProfileHeader: React.FC = () => {
     } catch (err) {
       const textArea = document.createElement('textarea');
       textArea.value = email;
+      textArea.setAttribute('readonly', '');
       textArea.style.position = 'fixed';
       textArea.style.left = '-9999px';
       textArea.style.top = '0';
