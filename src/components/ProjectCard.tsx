@@ -9,7 +9,7 @@ const LINK_ICON_MAP: Record<ProjectLink['icon'], React.ReactNode> = {
 
 const CARD_STYLE = {
   inactive: 'border-white/5 bg-[#09090b]/50 backdrop-blur-sm',
-  active:   'border-white/30 bg-[#0c0c0e] shadow-[0_30px_60px_rgba(0,0,0,0.5)] scale-[1.01]',
+  active:   'border-white/40 bg-[#18181b] shadow-[0_20px_50px_rgba(0,0,0,0.6)] scale-[1.01] ring-1 ring-white/20',
 } as const;
 
 export const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
@@ -42,6 +42,22 @@ export const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
       onMouseLeave={() => { if (!isTouch) setIsActive(false); }}
       onClick={()   => { if (isTouch)  setIsActive(!isActive); }}
     >
+      {/* Border Beam Effect */}
+      {isActive && (
+        <div 
+          className="absolute inset-0 rounded-2xl pointer-events-none overflow-hidden z-0"
+          style={{ 
+            maskImage: 'linear-gradient(black, black), linear-gradient(black, black)', 
+            maskClip: 'content-box, border-box', 
+            WebkitMaskComposite: 'xor',
+            maskComposite: 'exclude', 
+            padding: '1.5px' 
+          }}
+        >
+          <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_0,rgba(255,255,255,0.8)_10%,transparent_20%)] animate-border-beam" />
+        </div>
+      )}
+
       <div className="relative z-10 flex flex-col">
         <div className="flex justify-between items-start mb-3">
           <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
@@ -53,11 +69,11 @@ export const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
           <ChevronRight size={16} className={`transition-all duration-500 ${isActive ? 'text-white rotate-90' : 'text-[#27272a] opacity-0'}`} />
         </div>
 
-        <div className={`text-sm leading-relaxed mb-4 transition-colors duration-500 ${isActive ? 'text-[#a1a1aa]' : 'text-[#71717a]'}`}>
+        <div className={`text-sm leading-relaxed mb-4 transition-colors duration-500 ${isActive ? 'text-[#e4e4e7]' : 'text-[#a1a1aa]'}`}>
           <ul className="space-y-1.5">
             {project.desc.map((line, i) => (
               <li key={i} className="flex gap-2">
-                <span className="mt-1.5 w-1 h-1 rounded-full bg-[#27272a] shrink-0" />
+                <span className={`mt-1.5 w-1 h-1 rounded-full shrink-0 transition-colors duration-500 ${isActive ? 'bg-[#52525b]' : 'bg-[#27272a]'}`} />
                 {line}
               </li>
             ))}
@@ -67,18 +83,18 @@ export const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
         <div className="mt-auto space-y-3">
           <div className="flex flex-wrap gap-1.5 items-center">
             {project.tech.map((t) => (
-              <span key={t} className="font-mono text-[11px] px-2.5 py-1 rounded-full bg-white/[0.03] border border-white/10 text-[#52525b] group-hover:text-[#a1a1aa] group-hover:border-white/20 transition-all">
+              <span key={t} className={`font-mono text-[11px] px-2.5 py-1 rounded-full bg-white/[0.03] border transition-all ${isActive ? 'text-[#a1a1aa] border-white/20' : 'text-[#71717a] border-white/10'}`}>
                 {t}
               </span>
             ))}
           </div>
 
           <div 
-            className={`grid transition-all duration-500 ease-in-out ${isActive ? 'grid-rows-[1fr] opacity-100 mt-3' : 'grid-rows-[0fr] opacity-0 mt-0'}`}
+            className={`grid transition-all duration-700 ease-in-out ${isActive ? 'grid-rows-[1fr] opacity-100 mt-4' : 'grid-rows-[0fr] opacity-0 mt-0'}`}
           >
             <div className="overflow-hidden">
               {hasLinks && (
-                <div className="flex justify-end gap-2 pb-1">
+                <div className={`flex justify-end gap-2.5 pb-1 transition-all duration-700 ${isActive ? 'translate-y-0 opacity-100 delay-300' : 'translate-y-4 opacity-0'}`}>
                   {project.links!.map((link, i) => (
                     <a
                       key={i}
@@ -86,7 +102,7 @@ export const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
                       target="_blank"
                       rel="noreferrer"
                       onClick={(e) => e.stopPropagation()}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-mono font-bold transition-all duration-300 ${link.hoverClass} border-white/5 bg-white/[0.03] hover:scale-105 group/link shadow-sm`}
+                      className={`flex items-center gap-1.5 px-4 py-2 rounded-xl border text-xs font-mono font-bold transition-all duration-300 ${link.hoverClass} border-white/5 bg-white/[0.03] hover:scale-110 group/link shadow-md`}
                     >
                       <span className="opacity-60 group-hover/link:opacity-100 transition-opacity">
                         {LINK_ICON_MAP[link.icon]}
