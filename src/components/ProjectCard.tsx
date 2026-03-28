@@ -78,7 +78,7 @@ export const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
         >
           <div className="min-h-0 overflow-hidden">
             {hasLinks && (
-              <div className={`flex flex-wrap justify-end gap-3 px-2 pb-4 pt-5 transition-all duration-700 ${isActive ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
+              <div className={`flex flex-col sm:flex-row sm:flex-wrap sm:justify-end gap-3 px-2 pb-4 pt-5 transition-all duration-700 ${isActive ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
                 {project.links!.map((link, i) => (
                   <a
                     key={i}
