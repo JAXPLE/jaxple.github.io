@@ -10,14 +10,14 @@ import { ParticleBackground } from './components/ParticleBackground';
 import { useGimmicks } from './hooks/useGimmicks';
 
 type SectionNode =
-  | { type: 'static'; id: string; icon: LucideIcon; title: string; content: React.ReactNode }
-  | { type: 'cards';  id: string; icon: LucideIcon; title: string; data: typeof PROJECTS_DATA };
+  | { type: 'static'; id: string; title: string; content: React.ReactNode }
+  | { type: 'cards';  id: string; title: string; data: typeof PROJECTS_DATA };
 
 const GRID_SECTIONS: SectionNode[] = [
-  { type: 'static', id: 'about',      icon: User,       title: '~/about',       content: <AboutSection /> },
-  { type: 'cards',  id: 'projects',   icon: FolderGit2, title: '~/projects',    data: PROJECTS_DATA },
-  { type: 'static', id: 'skills',     icon: Cpu,        title: '~/skills',      content: <SkillSection /> },
-  { type: 'cards',  id: 'opensource', icon: Star,        title: '~/open source', data: OPENSOURCE_DATA },
+  { type: 'static', id: 'about',      title: '~/about',       content: <AboutSection /> },
+  { type: 'static', id: 'skills',     title: '~/skills',      content: <SkillSection /> },
+  { type: 'cards',  id: 'projects',   title: '~/projects',    data: PROJECTS_DATA },
+  { type: 'cards',  id: 'opensource', title: '~/open source', data: OPENSOURCE_DATA },
 ];
 
 const NOISE_URL = 'https://grainy-gradients.vercel.app/noise.svg';
@@ -30,17 +30,17 @@ const THEME = {
 function renderSection(node: SectionNode) {
   if (node.type === 'cards') {
     return (
-      <section key={node.id} className="space-y-4">
-        <SectionHeader icon={node.icon} title={node.title} />
-        <div className="space-y-3">
+      <section key={node.id} className="space-y-6">
+        <SectionHeader title={node.title} />
+        <div className="grid grid-cols-1 gap-4">
           {node.data.map((p) => <ProjectCard key={p.id} project={p} />)}
         </div>
       </section>
     );
   }
   return (
-    <section key={node.id} className="space-y-4">
-      <SectionHeader icon={node.icon} title={node.title} />
+    <section key={node.id} className="space-y-6">
+      <SectionHeader title={node.title} />
       {node.content}
     </section>
   );
@@ -56,24 +56,39 @@ function App() {
       <div className={`fixed top-0 left-0 h-[2px] z-50 transition-all duration-150 ease-out ${theme.progress}`} style={{ width: `${scrollProgress}%` }} />
       <div
         className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-[2000ms]"
-        style={{ opacity: idle ? 0 : 1, background: `radial-gradient(800px circle at ${mousePosition.x}px ${mousePosition.y}px, ${theme.spotlight}, transparent 40%)` }}
+        style={{ opacity: idle ? 0 : 1, background: `radial-gradient(1000px circle at ${mousePosition.x}px ${mousePosition.y}px, ${theme.spotlight}, transparent 40%)` }}
       />
       <ParticleBackground hackerMode={hackerMode} />
 
-      <div className="w-full max-w-5xl animate-fade-in relative z-10 space-y-12">
+      <div className="w-full max-w-5xl animate-fade-in relative z-10 space-y-20">
         <ProfileHeader />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-start">
-          <div className="space-y-8 md:space-y-10">
-            {renderSection(GRID_SECTIONS[0])}
-            {renderSection(GRID_SECTIONS[2])}
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+          {/* Left Column: About -> (Mobile Skills) -> Projects */}
+          <div className="space-y-12">
+            {renderSection(GRID_SECTIONS[0])} {/* About */}
+            
+            {/* Mobile-only Skills: Shows up between About and Projects on small screens */}
+            <div className="md:hidden">
+              {renderSection(GRID_SECTIONS[1])}
+            </div>
+
+            {renderSection(GRID_SECTIONS[2])} {/* Projects */}
           </div>
-          <div className="space-y-8 md:space-y-10">
-            {renderSection(GRID_SECTIONS[1])}
-            {renderSection(GRID_SECTIONS[3])}
+
+          {/* Right Column: (Desktop Skills) -> Open Source */}
+          <div className="space-y-12">
+            {/* Desktop-only Skills: Shows up in the sidebar on large screens */}
+            <div className="hidden md:block">
+              {renderSection(GRID_SECTIONS[1])}
+            </div>
+            
+            {renderSection(GRID_SECTIONS[3])} {/* Open Source */}
           </div>
         </div>
-        <footer className="pt-4 flex justify-center text-[#52525b]">
-          <span className="font-mono text-[10px]">./EOF</span>
+
+        <footer className="pt-12 flex justify-center text-[#3f3f46]">
+          <span className="font-mono text-[10px] tracking-wider">./EOF</span>
         </footer>
       </div>
     </div>
