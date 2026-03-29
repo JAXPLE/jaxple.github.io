@@ -19,8 +19,9 @@ export const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
   const [isHighlighted, setIsHighlighted] = useState(false);
 
   useEffect(() => {
-    const handleHighlight = (e: CustomEvent) => {
-      if (e.detail.id === project.id) {
+    const handleHighlight = (e: Event) => {
+      const customEvent = e as CustomEvent<{ id: string }>;
+      if (customEvent.detail.id === project.id) {
         setIsActive(true);
         setIsHighlighted(true);
         setTimeout(() => setIsHighlighted(false), 2000);
@@ -28,8 +29,8 @@ export const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
         setIsActive(false);
       }
     };
-    window.addEventListener('highlight-project' as any, handleHighlight as any);
-    return () => window.removeEventListener('highlight-project' as any, handleHighlight as any);
+    window.addEventListener('highlight-project', handleHighlight);
+    return () => window.removeEventListener('highlight-project', handleHighlight);
   }, [project.id]);
 
   const hasLinks = !!project.links?.length;

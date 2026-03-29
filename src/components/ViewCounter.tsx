@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 function getKstDateString() {
   const date = new Date();
-  date.setUTCHours(date.getUTCHours() + 9); // KST is UTC+9
+  date.setUTCHours(date.getUTCHours() + 9);
   return date.toISOString().split('T')[0];
 }
 
@@ -18,8 +18,6 @@ export function ViewCounter() {
 
         const method = hasCounted ? 'GET' : 'POST';
         
-        // In dev environment, try to hit production or a local worker proxy.
-        // For production, use relative URL.
         const apiUrl = import.meta.env.DEV ? 'https://jaxple.dev/api/views' : '/api/views';
 
         const response = await fetch(apiUrl, {
@@ -33,7 +31,7 @@ export function ViewCounter() {
           const data = await response.json();
           if (data.error) {
             console.error('ViewCounter API Error:', data.error);
-            return; // Don't show counter if there is a config error
+            return;
           }
           
           setViews({ total: data.total, daily: data.daily });

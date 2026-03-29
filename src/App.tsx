@@ -60,7 +60,7 @@ function App() {
       <ParticleBackground hackerMode={hackerMode} />
 
 
-      <div className="w-full max-w-5xl animate-fade-in relative z-10 space-y-20">
+      <main className="w-full max-w-5xl animate-fade-in relative z-10 space-y-20">
         <ProfileHeader />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
@@ -84,7 +84,7 @@ function App() {
           <ViewCounter />
           <span className="font-mono text-[10px] tracking-wider">./EOF</span>
         </footer>
-      </div>
+      </main>
     </div>
   );
 }
