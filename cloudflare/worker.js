@@ -15,7 +15,7 @@ const SENSITIVE_HEADERS = [
   'cf-request-id'
 ];
 const BOT_USER_AGENTS = [
-  'curl', 'wget', 'python', 'go-http-client', 'postman', 
+  'curl', 'wget', 'python', 'go-http-client', 'postman',
   'headless', 'phantomjs', 'selenium', 'puppeteer'
 ];
 const SECURITY_HEADERS = {
@@ -58,7 +58,7 @@ class ContentCleaner {
 
 async function getKstDateString() {
   const date = new Date();
-  date.setUTCHours(date.getUTCHours() + 9); // KST is UTC+9
+  date.setUTCHours(date.getUTCHours() + 9);
   return date.toISOString().split('T')[0];
 }
 
@@ -112,7 +112,7 @@ async function handleViewsApi(request) {
 
 async function handleRequest(request) {
   const url = new URL(request.url);
-  
+
   if (url.pathname === '/api/views') {
     return handleViewsApi(request);
   }

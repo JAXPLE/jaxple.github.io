@@ -89,7 +89,7 @@ export const OPENSOURCE_DATA: Project[] = [
     title: 'Wurst Client',
     period: '2022.12 - 현재',
     desc: [
-      'GitHub 1.4k+ Java 오픈소스 프로젝트 핵심 기여',
+      'GitHub 1.4k+ Java 오픈소스 프로젝트 모듈 기여',
       '채팅 hooking 후 구글번역 API를 통한 실시간 비동기 채팅번역 모듈 설계·구현',
       '기존 하드코딩 구조를 GUI로 변경하여 사용성 개선',
     ],
@@ -97,7 +97,7 @@ export const OPENSOURCE_DATA: Project[] = [
     links: [
       {
         icon: 'github',
-        text: '비동기 채팅 번역 모듈 PR',
+        text: '비동기 채팅 번역 모듈 기반코드 제시 PR',
         url: 'https://github.com/Wurst-Imperium/Wurst7/pull/1021',
         hoverClass: 'hover:bg-[#24292e] hover:border-[#24292e]',
       },
