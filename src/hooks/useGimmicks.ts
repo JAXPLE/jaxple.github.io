@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 
-interface MousePosition { x: number; y: number; }
-
 export function useGimmicks() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [hackerMode, setHackerMode] = useState(false);
