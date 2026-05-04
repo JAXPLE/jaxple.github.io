@@ -25,5 +25,6 @@ dist-ssr
 
 resume/*
 *.pdf
+GEMINI.md
 
 wrangler-account.json
