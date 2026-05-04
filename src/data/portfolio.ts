@@ -72,7 +72,7 @@ export const PROJECTS_DATA: Project[] = [
   },
   {
     id: 'semicon-control',
-    title: 'MFC 기반 장비 미들웨어 개발 및 유지보수',
+    title: 'MFC 기반 장비 소프트웨어 개발 및 유지보수',
     period: '2023.07 - 2025.01',
     desc: [
       '6개국의 총 13개 고객사 대응 MFC 기반 장비 미들웨어 개발',
