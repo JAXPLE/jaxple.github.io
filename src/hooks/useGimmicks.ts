@@ -3,7 +3,6 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 interface MousePosition { x: number; y: number; }
 
 export function useGimmicks() {
-  const [mousePosition, setMousePosition] = useState<MousePosition>({ x: 0, y: 0 });
   const [scrollProgress, setScrollProgress] = useState(0);
   const [hackerMode, setHackerMode] = useState(false);
   const [idle, setIdle] = useState(true);
@@ -11,7 +10,8 @@ export function useGimmicks() {
   const idleTimer = useRef<ReturnType<typeof setTimeout>>();
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
-    setMousePosition({ x: e.clientX, y: e.clientY });
+    document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+    document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
     setIdle(false);
     clearTimeout(idleTimer.current);
     idleTimer.current = setTimeout(() => setIdle(true), 3000);
@@ -42,5 +42,5 @@ export function useGimmicks() {
     };
   }, [handleMouseMove, handleScroll, handleKeyDown]);
 
-  return { mousePosition, scrollProgress, hackerMode, idle };
+  return { scrollProgress, hackerMode, idle };
 }

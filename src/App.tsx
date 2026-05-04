@@ -46,7 +46,7 @@ function renderSection(node: SectionNode) {
 }
 
 function App() {
-  const { mousePosition, scrollProgress, hackerMode, idle } = useGimmicks();
+  const { scrollProgress, hackerMode, idle } = useGimmicks();
   const activeTheme = hackerMode ? THEMES.hacker : THEMES.normal;
 
   return (
@@ -55,7 +55,7 @@ function App() {
       <div className={`fixed top-0 left-0 h-[2px] z-50 transition-all duration-150 ease-out ${activeTheme.progress}`} style={{ width: `${scrollProgress}%` }} />
       <div
         className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-[2000ms]"
-        style={{ opacity: idle ? 0 : 1, background: `radial-gradient(1000px circle at ${mousePosition.x}px ${mousePosition.y}px, ${activeTheme.spotlight}, transparent 40%)` }}
+        style={{ opacity: idle ? 0 : 1, background: `radial-gradient(1000px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), ${activeTheme.spotlight}, transparent 40%)` }}
       />
       <ParticleBackground hackerMode={hackerMode} />
 

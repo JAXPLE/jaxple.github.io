@@ -34,16 +34,9 @@ export const AboutSection: React.FC = () => {
       {highlights.map((item, i) => (
         <HoverCard 
           key={i} 
-          className="cursor-pointer" 
+          as="button"
+          className="cursor-pointer w-full text-left" 
           onClick={() => scrollToProject(item.id)}
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e: React.KeyboardEvent) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              scrollToProject(item.id);
-            }
-          }}
         >
           <div className="w-full flex gap-4 items-start p-4 text-left transition-transform active:scale-[0.98]">
             <div className="mt-1 p-2 rounded-lg bg-white/5 border border-white/10 transition-colors shrink-0">
