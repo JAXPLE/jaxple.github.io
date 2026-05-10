@@ -1,5 +1,4 @@
 import React from 'react';
-import { BorderBeam } from './BorderBeam';
 
 interface SocialButtonProps {
   href?: string;
@@ -18,11 +17,10 @@ export const SocialButton: React.FC<SocialButtonProps> = ({
   isCopied,
   hoverColorClass,
 }) => {
-  const commonClasses = `relative overflow-hidden w-full sm:w-auto group flex items-center justify-center h-11 px-5 rounded-xl bg-white/[0.03] border transition-all duration-300 ${isCopied ? 'border-green-500/50 bg-green-500/10' : `border-white/5 ${hoverColorClass}`}`;
+  const commonClasses = `relative overflow-hidden w-full sm:w-auto lg:w-full group flex items-center justify-center lg:justify-start h-11 px-5 rounded-md bg-white/[0.03] border transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25 ${isCopied ? 'border-green-500/50 bg-green-500/10' : `border-white/10 ${hoverColorClass}`}`;
   
   const content = (
     <>
-      <BorderBeam intensity="high" />
       <span className="relative z-10 text-[#a1a1aa] group-hover:text-white transition-colors mr-2.5 flex items-center">
         {icon}
       </span>

@@ -1,20 +1,20 @@
 import { SKILLS_DATA } from '../data/portfolio';
 
 export const SkillSection: React.FC = () => (
-  <div className="space-y-4">
+  <div className="space-y-3">
     {SKILLS_DATA.map((skill) => (
       <div
         key={skill.category}
-        className="rounded-2xl border border-white/5 bg-[#09090b]/50 backdrop-blur-sm p-5 space-y-3"
+        className="grid grid-cols-1 sm:grid-cols-[140px_minmax(0,1fr)] gap-3 rounded-lg border border-white/10 bg-[#121214] p-4"
       >
-        <h4 className="font-mono text-xs tracking-[0.2em] text-[#52525b] font-bold">
+        <h4 className="font-mono text-xs tracking-[0.16em] text-[#8b8b93] font-bold pt-1">
           {skill.category}
         </h4>
         <div className="flex flex-wrap gap-2">
           {skill.items.split(', ').map((item) => (
             <span
               key={item}
-              className="px-3 py-1 rounded-lg bg-white/[0.03] border border-white/10 text-[#a1a1aa] text-sm font-medium"
+              className="px-3 py-1 rounded-md bg-white/[0.04] border border-white/10 text-[#d4d4d8] text-sm font-medium"
             >
               {item}
             </span>

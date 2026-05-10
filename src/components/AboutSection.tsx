@@ -30,19 +30,19 @@ export const AboutSection: React.FC = () => {
   };
 
   return (
-    <div className="space-y-4">
-      {highlights.map((item, i) => (
+    <div className="space-y-3">
+      {highlights.map((item) => (
         <HoverCard 
-          key={i} 
+          key={item.id} 
           as="button"
           className="cursor-pointer w-full text-left" 
           onClick={() => scrollToProject(item.id)}
         >
-          <div className="w-full flex gap-4 items-start p-4 text-left transition-transform active:scale-[0.98]">
-            <div className="mt-1 p-2 rounded-lg bg-white/5 border border-white/10 transition-colors shrink-0">
+          <div className="w-full flex gap-4 items-start p-4 text-left">
+            <div className="mt-0.5 p-2 rounded-md bg-white/[0.04] border border-white/10 transition-colors shrink-0">
               {item.icon}
             </div>
-            <p className="text-sm md:text-base text-[#71717a] font-medium leading-relaxed group-hover:text-[#a1a1aa] transition-colors">
+            <p className="text-[15px] md:text-base text-[#d4d4d8] font-medium leading-7 group-hover:text-white transition-colors">
               {item.text}
             </p>
           </div>

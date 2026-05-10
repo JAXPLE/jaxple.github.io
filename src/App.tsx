@@ -4,7 +4,6 @@ import { SectionHeader } from './components/SectionHeader';
 import { AboutSection } from './components/AboutSection';
 import { ProjectCard } from './components/ProjectCard';
 import { SkillSection } from './components/SkillSection';
-import { ParticleBackground } from './components/ParticleBackground';
 import { ViewCounter } from './components/ViewCounter';
 import { useGimmicks } from './hooks/useGimmicks';
 
@@ -18,13 +17,6 @@ const GRID_SECTIONS: SectionNode[] = [
   { type: 'cards',  id: 'projects',   title: '~/projects',    data: PROJECTS_DATA },
   { type: 'cards',  id: 'opensource', title: '~/open source', data: OPENSOURCE_DATA },
 ];
-
-const NOISE_URL = 'https://grainy-gradients.vercel.app/noise.svg';
-
-const THEMES = {
-  normal: { spotlight: 'rgba(255,255,255,0.08)', progress: 'bg-[#e4e4e7]', root: '' },
-  hacker: { spotlight: 'rgba(16,185,129,0.15)',  progress: 'bg-[#10b981]',  root: '!bg-[#021200] !text-[#10b981]' },
-} as const;
 
 function renderSection(node: SectionNode) {
   if (node.type === 'cards') {
@@ -46,44 +38,25 @@ function renderSection(node: SectionNode) {
 }
 
 function App() {
-  const { scrollProgress, hackerMode, idle } = useGimmicks();
-  const activeTheme = hackerMode ? THEMES.hacker : THEMES.normal;
+  const { scrollProgress } = useGimmicks();
 
   return (
-    <div className={`relative min-h-screen bg-black text-[#a1a1aa] font-sans selection:bg-[#3f3f46] selection:text-white flex justify-center py-12 md:py-24 px-6 overflow-x-hidden transition-all duration-700 ${activeTheme.root}`}>
-      <div className={`fixed inset-0 pointer-events-none z-[100] opacity-[0.03] mix-blend-overlay bg-[url('${NOISE_URL}')]`} />
-      <div className={`fixed top-0 left-0 h-[2px] z-50 transition-all duration-150 ease-out ${activeTheme.progress}`} style={{ width: `${scrollProgress}%` }} />
-      <div
-        className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-[2000ms]"
-        style={{ opacity: idle ? 0 : 1, background: `radial-gradient(1000px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), ${activeTheme.spotlight}, transparent 40%)` }}
-      />
-      <ParticleBackground hackerMode={hackerMode} />
+    <div className="relative min-h-screen bg-[#0d0d0e] text-[#b9b9c0] font-sans selection:bg-[#303034] selection:text-white flex justify-center py-8 md:py-16 px-5 md:px-8 overflow-x-hidden">
+      <div className="fixed top-0 left-0 h-[2px] z-50 transition-all duration-150 ease-out bg-[#d4d4d8]" style={{ width: `${scrollProgress}%` }} />
+      <main className="w-full max-w-6xl animate-fade-in relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[300px_minmax(0,1fr)] gap-12 lg:gap-16 items-start">
+          <aside className="lg:sticky lg:top-16">
+            <ProfileHeader />
+          </aside>
 
-
-      <main className="w-full max-w-5xl animate-fade-in relative z-10 space-y-20">
-        <ProfileHeader />
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
-          <div className="space-y-12">
-            {renderSection(GRID_SECTIONS[0])}
-            <div className="md:hidden">
-              {renderSection(GRID_SECTIONS[1])}
-            </div>
-            {renderSection(GRID_SECTIONS[2])}
-          </div>
-
-          <div className="space-y-12">
-            <div className="hidden md:block">
-              {renderSection(GRID_SECTIONS[1])}
-            </div>
-            {renderSection(GRID_SECTIONS[3])}
+          <div className="min-w-0 space-y-12">
+            {GRID_SECTIONS.map(renderSection)}
+            <footer className="pt-4 pb-8 flex flex-col items-start gap-5 text-[#52525b]">
+              <ViewCounter />
+              <span className="font-mono text-[10px] tracking-wider">./EOF</span>
+            </footer>
           </div>
         </div>
-
-        <footer className="pt-12 pb-8 flex flex-col items-center gap-6 text-[#3f3f46]">
-          <ViewCounter />
-          <span className="font-mono text-[10px] tracking-wider">./EOF</span>
-        </footer>
       </main>
     </div>
   );
