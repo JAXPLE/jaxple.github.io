@@ -6,6 +6,7 @@ import { ProjectCard } from './components/ProjectCard';
 import { SkillSection } from './components/SkillSection';
 import { ViewCounter } from './components/ViewCounter';
 import { useGimmicks } from './hooks/useGimmicks';
+import { useScrollReveal } from './hooks/useScrollReveal';
 
 type SectionNode =
   | { type: 'static'; id: string; title: string; content: React.ReactNode }
@@ -24,7 +25,9 @@ function renderSection(node: SectionNode) {
       <section key={node.id} className="space-y-6">
         <SectionHeader title={node.title} />
         <div className="grid grid-cols-1 gap-4">
-          {node.data.map((p) => <ProjectCard key={p.id} project={p} />)}
+          {node.data.map((p, index) => (
+            <ProjectCard key={p.id} project={p} revealDelay={index * 90} />
+          ))}
         </div>
       </section>
     );
@@ -39,6 +42,7 @@ function renderSection(node: SectionNode) {
 
 function App() {
   const { scrollProgress } = useGimmicks();
+  useScrollReveal();
 
   return (
     <div className="relative min-h-screen bg-[#0d0d0e] text-[#b9b9c0] font-sans selection:bg-[#303034] selection:text-white flex justify-center py-8 md:py-16 px-5 md:px-8 overflow-x-hidden">
@@ -51,7 +55,10 @@ function App() {
 
           <div className="min-w-0 space-y-12">
             {GRID_SECTIONS.map(renderSection)}
-            <footer className="pt-4 pb-8 flex flex-col items-start gap-5 text-[#52525b]">
+            <footer
+              data-scroll-reveal
+              className="pt-4 pb-8 flex flex-col items-start gap-5 text-[#52525b]"
+            >
               <ViewCounter />
               <span className="font-mono text-[10px] tracking-wider">./EOF</span>
             </footer>

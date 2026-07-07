@@ -7,7 +7,12 @@ const LINK_ICON_MAP: Record<ProjectLink['icon'], React.ReactNode> = {
   notion: <BookOpen size={14} />,
 };
 
-export const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
+interface ProjectCardProps {
+  project: Project;
+  revealDelay?: number;
+}
+
+export const ProjectCard: React.FC<ProjectCardProps> = ({ project, revealDelay = 0 }) => {
   const [isHighlighted, setIsHighlighted] = useState(false);
 
   useEffect(() => {
@@ -36,7 +41,9 @@ export const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
   return (
     <article
       id={project.id}
+      data-scroll-reveal
       className={`relative p-5 md:p-6 rounded-lg border border-white/10 bg-[#121214] scroll-mt-24 transition-colors duration-300 ${isHighlighted ? 'border-white/35 bg-[#17171a]' : ''}`}
+      style={{ animationDelay: `${revealDelay}ms` }}
     >
       <div className="flex flex-col h-full">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">

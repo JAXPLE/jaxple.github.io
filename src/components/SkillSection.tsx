@@ -2,10 +2,12 @@ import { SKILLS_DATA } from '../data/portfolio';
 
 export const SkillSection: React.FC = () => (
   <div className="space-y-3">
-    {SKILLS_DATA.map((skill) => (
+    {SKILLS_DATA.map((skill, index) => (
       <div
         key={skill.category}
+        data-scroll-reveal
         className="grid grid-cols-1 sm:grid-cols-[140px_minmax(0,1fr)] gap-3 rounded-lg border border-white/10 bg-[#121214] p-4"
+        style={{ animationDelay: `${index * 80}ms` }}
       >
         <h4 className="font-mono text-xs tracking-[0.16em] text-[#8b8b93] font-bold pt-1">
           {skill.category}
