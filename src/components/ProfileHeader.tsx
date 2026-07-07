@@ -15,7 +15,7 @@ export const ProfileHeader: React.FC = () => {
       } else {
         throw new Error('Clipboard API unavailable');
       }
-    } catch (err) {
+    } catch {
       const textArea = document.createElement('textarea');
       textArea.value = email;
       textArea.setAttribute('readonly', '');
