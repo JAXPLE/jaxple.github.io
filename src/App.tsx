@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { AboutSection } from './components/AboutSection';
+import { LanguageToggle } from './components/LanguageToggle';
 import { ProfileHeader } from './components/ProfileHeader';
 import { ProjectCard } from './components/ProjectCard';
 import { SectionHeader } from './components/SectionHeader';
@@ -86,13 +87,18 @@ function App() {
         style={{ width: `${scrollProgress}%` }}
       />
       <main className="w-full max-w-6xl animate-fade-in relative z-10">
+        <div className="mb-6 flex justify-end md:mb-8">
+          <LanguageToggle
+            language={language}
+            label={content.profile.languageSwitcher.label}
+            koreanLabel={content.profile.languageSwitcher.koreanLabel}
+            englishLabel={content.profile.languageSwitcher.englishLabel}
+            onChange={setLanguage}
+          />
+        </div>
         <div className="grid grid-cols-1 lg:grid-cols-[300px_minmax(0,1fr)] gap-12 lg:gap-16 items-start">
           <aside className="lg:sticky lg:top-16">
-            <ProfileHeader
-              content={content.profile}
-              language={language}
-              onLanguageChange={setLanguage}
-            />
+            <ProfileHeader content={content.profile} />
           </aside>
 
           <div className="min-w-0 space-y-12">

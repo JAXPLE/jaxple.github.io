@@ -1,21 +1,13 @@
 import { Check, Github, Linkedin, Mail } from 'lucide-react';
 import React, { useState } from 'react';
 import type { ProfileContent } from '../data/portfolio';
-import type { Language } from '../i18n';
-import { LanguageToggle } from './LanguageToggle';
 import { SocialButton } from './SocialButton';
 
 interface ProfileHeaderProps {
   content: ProfileContent;
-  language: Language;
-  onLanguageChange: (language: Language) => void;
 }
 
-export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
-  content,
-  language,
-  onLanguageChange,
-}) => {
+export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ content }) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopyEmail = async (event: React.MouseEvent | React.TouchEvent) => {
@@ -76,14 +68,6 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           </p>
         </div>
       </div>
-
-      <LanguageToggle
-        language={language}
-        label={content.languageSwitcher.label}
-        koreanLabel={content.languageSwitcher.koreanLabel}
-        englishLabel={content.languageSwitcher.englishLabel}
-        onChange={onLanguageChange}
-      />
 
       <p className="text-base md:text-lg lg:text-base leading-relaxed max-w-xl lg:max-w-[280px] text-[#a1a1aa] font-medium">
         {content.tagline.prefix}
