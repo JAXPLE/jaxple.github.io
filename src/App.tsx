@@ -106,10 +106,9 @@ function App() {
             {sections.map(renderSection)}
             <footer
               data-scroll-reveal
-              className="pt-4 pb-8 flex flex-col items-start gap-5 text-[#52525b]"
+              className="pt-4 pb-8 text-[#52525b]"
             >
               <ViewCounter content={content.viewCounter} language={language} />
-              <span className="font-mono text-[10px] tracking-wider">{content.eof}</span>
             </footer>
           </div>
         </div>

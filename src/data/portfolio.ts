@@ -73,7 +73,6 @@ export interface PortfolioContent {
   viewCounter: ViewCounterContent;
   lockScreen: LockScreenContent;
   metadata: LocalizedMetadata;
-  eof: string;
 }
 
 const KOREAN_CONTENT: PortfolioContent = {
@@ -230,7 +229,6 @@ const KOREAN_CONTENT: PortfolioContent = {
     openGraphTitle: 'JwonLEE - Software Engineer',
     openGraphDescription: '본질적인 시스템의 병목을 찾아내고, 성능을 끌어올립니다. 이재원 - 소프트웨어 엔지니어',
   },
-  eof: './EOF',
 };
 
 const ENGLISH_CONTENT: PortfolioContent = {
@@ -387,7 +385,6 @@ const ENGLISH_CONTENT: PortfolioContent = {
     openGraphTitle: 'JwonLEE - Software Engineer',
     openGraphDescription: 'Software engineer focused on system bottlenecks and measurable performance improvements.',
   },
-  eof: './EOF',
 };
 
 export const PORTFOLIO_CONTENT: Record<Language, PortfolioContent> = {
