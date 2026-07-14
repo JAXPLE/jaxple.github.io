@@ -87,15 +87,15 @@ function App() {
         style={{ width: `${scrollProgress}%` }}
       />
       <main className="w-full max-w-6xl animate-fade-in relative z-10">
-        <div className="grid grid-cols-1 items-start gap-y-5 lg:grid-cols-[300px_52px_minmax(0,1fr)] lg:gap-x-2 lg:gap-y-0">
+        <div className="grid grid-cols-1 items-start gap-y-5 lg:grid-cols-[300px_32px_minmax(0,1fr)] lg:gap-x-4 lg:gap-y-0">
           <aside className="lg:sticky lg:top-16">
             <ProfileHeader content={content.profile} />
           </aside>
 
-          <div className="flex items-center gap-3 lg:sticky lg:top-16 lg:flex-col">
+          <div className="flex items-center gap-3 lg:flex-col">
             <span
               aria-hidden="true"
-              className="h-px flex-1 bg-gradient-to-r from-transparent to-white/10 lg:h-16 lg:w-px lg:flex-none lg:bg-gradient-to-b"
+              className="h-px flex-1 bg-white/[0.08] lg:h-10 lg:w-px lg:flex-none"
             />
             <LanguageToggle
               language={language}
@@ -106,7 +106,7 @@ function App() {
             />
             <span
               aria-hidden="true"
-              className="h-px flex-1 bg-gradient-to-l from-transparent to-white/10 lg:h-16 lg:w-px lg:flex-none lg:bg-gradient-to-t"
+              className="h-px flex-1 bg-white/[0.08] lg:h-10 lg:w-px lg:flex-none"
             />
           </div>
 
