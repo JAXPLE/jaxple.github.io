@@ -1,4 +1,11 @@
 import { useEffect, useState } from 'react';
+import type { ViewCounterContent } from '../data/portfolio';
+import type { Language } from '../i18n';
+
+interface ViewCounterProps {
+  content: ViewCounterContent;
+  language: Language;
+}
 
 function getKstDateString() {
   const date = new Date();
@@ -6,7 +13,7 @@ function getKstDateString() {
   return date.toISOString().split('T')[0];
 }
 
-export function ViewCounter() {
+export function ViewCounter({ content, language }: ViewCounterProps) {
   const [views, setViews] = useState<{ total: number; daily: number } | null>(null);
 
   useEffect(() => {
@@ -48,14 +55,18 @@ export function ViewCounter() {
     fetchViews();
   }, []);
 
-  if (!views) return null;
+  if (!views) {
+    return null;
+  }
+
+  const locale = language === 'ko' ? 'ko-KR' : 'en-US';
 
   return (
     <div className="flex items-center gap-2 text-[10px] md:text-xs font-mono opacity-50 hover:opacity-100 transition-opacity tracking-wider cursor-default">
       <span className="text-emerald-500 animate-pulse">&gt;</span>
-      <span>VIEWS: {views.total.toLocaleString()}</span>
+      <span>{content.total}: {views.total.toLocaleString(locale)}</span>
       <span className="text-zinc-600 opacity-50">|</span>
-      <span className="text-zinc-400">TODAY: {views.daily.toLocaleString()}</span>
+      <span className="text-zinc-400">{content.today}: {views.daily.toLocaleString(locale)}</span>
     </div>
   );
 }

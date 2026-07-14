@@ -1,14 +1,10 @@
+import { PORTFOLIO_CONTENT } from '../data/portfolio';
+import { resolveLanguage } from '../i18n';
+
 const CHECK_INTERVAL_MS = 700;
 const DEBUGGER_PAUSE_THRESHOLD_MS = 100;
 const DEVTOOLS_VIEWPORT_THRESHOLD_PX = 160;
 const SOURCE_REPOSITORY_URL = 'https://github.com/JAXPLE/jaxple.github.io';
-
-const LOCK_SCREEN_HTML = `
-  <div style="background-color:#000;color:#10b981;min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:monospace;font-size:20px;flex-direction:column;text-align:center;padding:24px;box-sizing:border-box;">
-    <p>[System Auth Failed]</p>
-    <p>코드가 궁금하시다면, <a href="${SOURCE_REPOSITORY_URL}" style="color:#34d399;text-decoration:underline;">${SOURCE_REPOSITORY_URL}</a> 여기로 들어가서 확인해주세요!</p>
-  </div>
-`;
 
 let isLocked = false;
 
@@ -47,7 +43,22 @@ function lockPage() {
   document.documentElement.style.backgroundColor = '#000';
   document.body.style.margin = '0';
   document.body.style.overflow = 'hidden';
-  document.body.innerHTML = LOCK_SCREEN_HTML;
+  document.body.innerHTML = createLockScreenHtml();
+}
+
+/**
+ * 현재 선택된 언어에 맞는 잠금 화면 마크업을 생성합니다.
+ */
+function createLockScreenHtml() {
+  const language = resolveLanguage();
+  const content = PORTFOLIO_CONTENT[language].lockScreen;
+
+  return `
+    <div style="background-color:#000;color:#10b981;min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:monospace;font-size:20px;flex-direction:column;text-align:center;padding:24px;box-sizing:border-box;">
+      <p>${content.status}</p>
+      <p>${content.messagePrefix}<a href="${SOURCE_REPOSITORY_URL}" style="color:#34d399;text-decoration:underline;">${content.linkLabel}</a>${content.messageSuffix}</p>
+    </div>
+  `;
 }
 
 /**

@@ -1,8 +1,12 @@
-import { SKILLS_DATA } from '../data/portfolio';
+import type { Skill } from '../data/portfolio';
 
-export const SkillSection: React.FC = () => (
+interface SkillSectionProps {
+  skills: Skill[];
+}
+
+export const SkillSection: React.FC<SkillSectionProps> = ({ skills }) => (
   <div className="space-y-3">
-    {SKILLS_DATA.map((skill, index) => (
+    {skills.map((skill, index) => (
       <div
         key={skill.category}
         data-scroll-reveal
