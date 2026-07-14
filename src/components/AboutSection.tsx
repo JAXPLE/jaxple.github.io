@@ -12,7 +12,7 @@ export const AboutSection: React.FC = () => {
     {
       id: 'cosmos',
       icon: <Target size={16} className="text-blue-400" />,
-      text: "동시성 이슈를 해결한 Event-Driven 실시간 미들웨어 구축",
+      text: "동시성 이슈를 해결한 Event-Driven 실시간 서버 구축",
     },
     {
       id: 'semicon-control',

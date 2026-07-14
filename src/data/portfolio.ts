@@ -53,10 +53,10 @@ export const PROJECTS_DATA: Project[] = [
   },
   {
     id: 'cosmos',
-    title: 'TradingView ↔ Telegram 시세 알림 미들웨어 개발',
+    title: 'TradingView ↔ Telegram 시세 알림 서버 개발',
     period: '2025.03 - 2025.06',
     desc: [
-      '실시간 시세 데이터 처리를 위한 Event-Driven 미들웨어 설계 및 구현',
+      '실시간 시세 데이터 처리를 위한 Event-Driven 서버 설계 및 구현',
       'Observer 패턴 기반 확장형 아키텍처 설계',
       '비동기 Multi-thread 파이프라인 구현을 통한 트래픽 처리',
     ],
@@ -75,7 +75,7 @@ export const PROJECTS_DATA: Project[] = [
     title: 'MFC 기반 장비 소프트웨어 개발 및 유지보수',
     period: '2023.07 - 2025.01',
     desc: [
-      '6개국의 총 13개 고객사 대응 MFC 기반 장비 미들웨어 개발',
+      '6개국의 총 13개 고객사 대응 MFC 기반 장비 소프트웨어 개발',
       '통신 구조 분석 및 블록 단위 재설계 (latency 83% 단축)',
       '반복 업무 프로세스 자동화 툴 구현 (소요 시간 93% 단축)',
     ],
