@@ -152,7 +152,7 @@ const KOREAN_CONTENT: PortfolioContent = {
     },
     {
       id: 'cosmos',
-      title: '코스모스 프로젝트',
+      title: '코스모스 파트너스',
       period: '2025.03 - 2025.06',
       desc: [
         '실시간 시세 데이터 처리를 위한 Event-Driven 서버 설계 및 구현',
@@ -309,7 +309,7 @@ const ENGLISH_CONTENT: PortfolioContent = {
     },
     {
       id: 'cosmos',
-      title: 'Cosmos Project',
+      title: 'Cosmos Partners',
       period: 'Mar 2025 — Jun 2025',
       desc: [
         'Designed and implemented an event-driven server for real-time market data processing',
