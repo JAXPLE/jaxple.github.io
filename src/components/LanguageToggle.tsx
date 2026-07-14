@@ -41,7 +41,7 @@ export function LanguageToggle({
     <div
       role="group"
       aria-label={label}
-      className="inline-flex shrink-0 items-center gap-2 lg:flex-col"
+      className="inline-flex shrink-0 items-center gap-2"
     >
       {LANGUAGE_OPTIONS.map((option, index) => {
         const isActive = language === option.language;
@@ -49,7 +49,7 @@ export function LanguageToggle({
         return (
           <Fragment key={option.language}>
             {index > 0 && (
-              <span aria-hidden="true" className="h-3 w-px bg-white/10 lg:h-px lg:w-3" />
+              <span aria-hidden="true" className="h-3 w-px bg-white/10" />
             )}
             <button
               type="button"
