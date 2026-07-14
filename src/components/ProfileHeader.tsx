@@ -51,11 +51,9 @@ export const ProfileHeader: React.FC = () => {
         이재원
       </h1>
       <div className="flex items-center justify-center lg:justify-start gap-2">
-        <span className="h-[1px] w-4 bg-[#27272a]"></span>
         <p className="font-mono text-xs md:text-sm tracking-[0.2em] text-[#71717a]">
           Software Engineer
         </p>
-        <span className="h-[1px] w-4 bg-[#27272a]"></span>
       </div>
     </div>
 
