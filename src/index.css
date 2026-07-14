@@ -2,48 +2,57 @@
 
 @theme {
   --font-sans: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", system-ui, sans-serif;
-
-  --animate-fade-in: fadeIn 0.8s ease-out forwards;
 }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+:root {
+  color-scheme: dark;
+  font-family: var(--font-sans);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --color-bg: #0b0b0b;
+  --color-text: #f5f5f2;
+  --color-muted: #9b9b96;
+  --color-line: #282826;
+  --color-line-strong: #51514d;
+  --color-success: #7dd3a7;
 }
 
-[data-scroll-reveal] {
-  opacity: 0;
-  transform: translate3d(0, 16px, 0);
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: var(--color-bg);
+  scroll-behavior: smooth;
 }
 
-[data-scroll-reveal].is-visible {
-  animation: scrollRevealUp 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background: var(--color-bg);
 }
 
-@keyframes scrollRevealUp {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, 16px, 0);
-  }
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
 
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
+button {
+  cursor: pointer;
+}
+
+::selection {
+  color: var(--color-bg);
+  background: var(--color-text);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-scroll-reveal],
-  [data-scroll-reveal].is-visible {
-    animation: none;
-    opacity: 1;
-    transform: none;
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
   }
 }

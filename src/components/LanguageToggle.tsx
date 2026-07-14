@@ -38,34 +38,28 @@ export function LanguageToggle({
   };
 
   return (
-    <div
-      role="group"
-      aria-label={label}
-      className="inline-flex shrink-0 items-center gap-2"
-    >
+    <div role="group" aria-label={label} className="flex items-center font-mono text-xs">
       {LANGUAGE_OPTIONS.map((option, index) => {
         const isActive = language === option.language;
 
         return (
           <Fragment key={option.language}>
-            {index > 0 && (
-              <span aria-hidden="true" className="h-3 w-px bg-white/10" />
-            )}
+            {index > 0 ? (
+              <span aria-hidden="true" className="text-[var(--color-line-strong)]">
+                /
+              </span>
+            ) : null}
             <button
               type="button"
               aria-label={getOptionLabel(option.language)}
               aria-pressed={isActive}
               onClick={() => handleChange(option.language)}
-              className={`group inline-flex min-h-8 min-w-8 items-center justify-center gap-1.5 rounded-sm px-1 font-mono text-[10px] font-bold tracking-widest transition-colors duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40 ${
-                isActive ? 'text-[#e4e4e7]' : 'text-[#52525b] hover:text-[#a1a1aa]'
+              className={`inline-flex min-h-11 min-w-11 items-center justify-center transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-text)] ${
+                isActive
+                  ? 'text-[var(--color-text)]'
+                  : 'text-[var(--color-muted)] hover:text-[var(--color-text)]'
               }`}
             >
-              <span
-                aria-hidden="true"
-                className={`h-1 w-1 rounded-full transition-colors duration-200 ${
-                  isActive ? 'bg-[#d4d4d8]' : 'bg-transparent group-hover:bg-[#52525b]'
-                }`}
-              />
               {option.text}
             </button>
           </Fragment>

@@ -1,37 +1,45 @@
 import type { Language, LocalizedMetadata } from '../i18n';
 
 export interface ProjectLink {
-  icon: 'github' | 'notion';
   text: string;
   url: string;
-  hoverClass: string;
 }
 
 export interface Project {
   id: string;
   title: string;
   period: string;
-  desc: string[];
+  summary: string;
+  details: string[];
   tech: string[];
   links?: ProjectLink[];
 }
 
 export interface Skill {
   category: string;
-  items: string;
+  items: string[];
 }
 
-export interface Highlight {
-  id: string;
-  icon: 'performance' | 'realtime' | 'automation';
-  text: string;
+export interface Achievement {
+  projectId: string;
+  value: string;
+  label: string;
+}
+
+export interface ContactContent {
+  eyebrow: string;
+  title: string;
+  description: string;
+  emailLabel: string;
+  copyComplete: string;
+  githubLabel: string;
+  linkedinLabel: string;
 }
 
 export interface ProfileContent {
   name: string;
   role: string;
   imageAlt: string;
-  copyComplete: string;
   tagline: {
     prefix: string;
     firstEmphasis: string;
@@ -39,16 +47,16 @@ export interface ProfileContent {
     secondEmphasis: string;
     suffix: string;
   };
+  navigation: {
+    work: string;
+    contact: string;
+  };
+  contact: ContactContent;
   languageSwitcher: {
     label: string;
     koreanLabel: string;
     englishLabel: string;
   };
-}
-
-export interface ViewCounterContent {
-  total: string;
-  today: string;
 }
 
 export interface LockScreenContent {
@@ -61,16 +69,15 @@ export interface LockScreenContent {
 export interface PortfolioContent {
   profile: ProfileContent;
   sections: {
-    about: string;
-    skills: string;
-    projects: string;
+    impact: string;
+    experience: string;
     openSource: string;
+    skills: string;
   };
-  highlights: Highlight[];
+  achievements: Achievement[];
   projects: Project[];
   openSource: Project[];
   skills: Skill[];
-  viewCounter: ViewCounterContent;
   lockScreen: LockScreenContent;
   metadata: LocalizedMetadata;
 }
@@ -80,13 +87,25 @@ const KOREAN_CONTENT: PortfolioContent = {
     name: '이재원',
     role: 'Software Engineer',
     imageAlt: '이재원 프로필 사진',
-    copyComplete: '복사완료!',
     tagline: {
       prefix: '본질적인 시스템의 ',
       firstEmphasis: '병목',
       middle: '을 찾아내고, ',
       secondEmphasis: '성능',
       suffix: '을 끌어올립니다.',
+    },
+    navigation: {
+      work: '주요 경험 보기',
+      contact: '연락하기',
+    },
+    contact: {
+      eyebrow: '연락',
+      title: '더 나은 시스템을 함께 만들고 싶다면.',
+      description: '프로젝트와 기술적 도전에 관한 대화를 환영합니다.',
+      emailLabel: '이메일 복사',
+      copyComplete: '복사 완료',
+      githubLabel: 'GitHub',
+      linkedinLabel: 'LinkedIn',
     },
     languageSwitcher: {
       label: '표시 언어 선택',
@@ -95,26 +114,26 @@ const KOREAN_CONTENT: PortfolioContent = {
     },
   },
   sections: {
-    about: '~/about',
-    skills: '~/skills',
-    projects: '~/projects',
-    openSource: '~/open source',
+    impact: '핵심 성과',
+    experience: '주요 경험',
+    openSource: '오픈소스',
+    skills: '기술',
   },
-  highlights: [
+  achievements: [
     {
-      id: 'dalso',
-      icon: 'performance',
-      text: '3,000개+ 아이템 시세 연산 및 이벤트 최적화 (TPS 3 → 20)',
+      projectId: 'dalso',
+      value: '3 → 20 TPS',
+      label: '3,000개+ 아이템의 시세·이벤트 연산 최적화',
     },
     {
-      id: 'cosmos',
-      icon: 'realtime',
-      text: '동시성 이슈를 해결한 Event-Driven 실시간 서버 구축',
+      projectId: 'samiltech',
+      value: '83% 단축',
+      label: '레거시 통신 구조 재설계로 지연 시간 개선',
     },
     {
-      id: 'samiltech',
-      icon: 'automation',
-      text: '레거시 통신 속도 83% 개선 및 문서 자동화로 소요 시간 93% 단축',
+      projectId: 'samiltech',
+      value: '93% 단축',
+      label: '반복 문서 업무 자동화로 처리 시간 개선',
     },
   ],
   projects: [
@@ -122,60 +141,52 @@ const KOREAN_CONTENT: PortfolioContent = {
       id: 'dalso',
       title: '달소읍 프로젝트',
       period: '2022.12 — 현재',
-      desc: [
-        'Java 기반 게임 서버 아키텍처 설계 및 장기 운영',
-        '3000개 이상의 아이템의 재고·수요 기반 유동 경제 시스템 로직 설계',
-        '반복 이벤트 차단 및 거래 연산 최적화로 서버 성능 개선 (TPS 3 → 20)',
+      summary: '반복 이벤트와 거래 연산을 최적화해 서버 처리 성능을 TPS 3에서 20으로 높였습니다.',
+      details: [
+        'Java 기반 게임 서버 아키텍처를 설계하고 장기간 운영했습니다.',
+        '3,000개 이상의 아이템에 재고·수요 기반 유동 경제 시스템을 적용했습니다.',
       ],
       tech: ['Java', 'Git', 'Ubuntu'],
       links: [
         {
-          icon: 'notion',
-          text: 'docs',
+          text: '프로젝트 문서',
           url: 'https://jaxple.notion.site/1e892da7e82180bda9f4d43c84200f97?source=copy_link',
-          hoverClass: 'hover:bg-black hover:border-black',
         },
         {
-          icon: 'github',
-          text: '기반 code',
+          text: '기반 소스 코드',
           url: 'https://github.com/JAXPLE/R10-PUBLIC',
-          hoverClass: 'hover:bg-[#24292e] hover:border-[#24292e]',
         },
         {
-          icon: 'notion',
-          text: '코드 docs',
+          text: '코드 문서',
           url: 'https://jaxple.notion.site/R10-Project-1ae92da7e82181e6b595d3dd3128d484',
-          hoverClass: 'hover:bg-black hover:border-black',
         },
       ],
     },
     {
       id: 'cosmos',
-      title: '코스모스 파트너스',
-      period: '2025.03 - 2025.06',
-      desc: [
-        '실시간 시세 데이터 처리를 위한 Event-Driven 서버 설계 및 구현',
-        'Observer 패턴 기반 확장형 아키텍처 설계',
-        '비동기 Multi-thread 파이프라인 구현을 통한 트래픽 처리',
+      title: '코스모스 프로젝트',
+      period: '2025.03 — 2025.06',
+      summary: '동시성 이슈를 해결한 Event-Driven 실시간 시세 처리 서버를 설계·구현했습니다.',
+      details: [
+        'Observer 패턴을 적용해 확장 가능한 이벤트 처리 구조를 설계했습니다.',
+        '비동기 Multi-thread 파이프라인으로 동시 트래픽을 처리했습니다.',
       ],
-      tech: ['Java', 'Git', 'Architect 설계'],
+      tech: ['Java', 'Git', 'Architecture Design'],
       links: [
         {
-          icon: 'notion',
-          text: 'docs',
+          text: '프로젝트 문서',
           url: 'https://jaxple.notion.site/COSMOS-Project-23592da7e821809dab4eea238f51fd43?source=copy_link',
-          hoverClass: 'hover:bg-black hover:border-black',
         },
       ],
     },
     {
       id: 'samiltech',
       title: '삼일테크(주)',
-      period: '2023.07 - 2025.01',
-      desc: [
-        '6개국의 총 13개 고객사 대응 MFC 기반 장비 소프트웨어 개발',
-        '통신 구조 분석 및 블록 단위 재설계 (latency 83% 단축)',
-        '반복 업무 프로세스 자동화 툴 구현 (소요 시간 93% 단축)',
+      period: '2023.07 — 2025.01',
+      summary: '레거시 통신 지연을 83% 줄이고 문서 자동화로 반복 업무 시간을 93% 단축했습니다.',
+      details: [
+        '6개국 13개 고객사를 지원하는 MFC 기반 장비 소프트웨어를 개발했습니다.',
+        '통신 구조를 블록 단위로 재설계하고 반복 업무 자동화 도구를 구현했습니다.',
       ],
       tech: ['C++', 'MFC', 'SVN'],
     },
@@ -184,38 +195,30 @@ const KOREAN_CONTENT: PortfolioContent = {
     {
       id: 'wurst',
       title: 'Wurst Client',
-      period: '2022.12 - 현재',
-      desc: [
-        'GitHub 1.4k+ Java 오픈소스 프로젝트 모듈 기여',
-        '채팅 hooking 후 구글번역 API를 통한 실시간 비동기 채팅번역 모듈 설계·구현',
-        '기존 하드코딩 구조를 GUI로 변경하여 사용성 개선',
+      period: '2022.12 — 현재',
+      summary: 'GitHub 1.4k+ Java 오픈소스 프로젝트에 실시간 번역과 사용성 개선 모듈을 기여했습니다.',
+      details: [
+        '메시지 hook과 Google Translate API를 활용한 비동기 실시간 채팅 번역을 구현했습니다.',
+        '하드코딩된 설정을 GUI로 전환해 사용성을 개선했습니다.',
       ],
       tech: ['Java', 'Git', 'Open Source'],
       links: [
         {
-          icon: 'github',
-          text: '비동기 채팅 번역 모듈 기반코드 제시 PR',
+          text: 'PR · 비동기 채팅 번역',
           url: 'https://github.com/Wurst-Imperium/Wurst7/pull/1021',
-          hoverClass: 'hover:bg-[#24292e] hover:border-[#24292e]',
         },
         {
-          icon: 'github',
-          text: 'GUI로 개선한 텔레포트 모듈 PR',
+          text: 'PR · GUI 텔레포트 모듈',
           url: 'https://github.com/Wurst-Imperium/Wurst7/pull/899',
-          hoverClass: 'hover:bg-[#24292e] hover:border-[#24292e]',
         },
       ],
     },
   ],
   skills: [
-    { category: 'Language', items: 'Java, C++' },
-    { category: 'Framework', items: 'MFC' },
-    { category: 'Tool', items: 'Visual Studio, Visual Studio Code, Tortoise SVN, GitHub' },
+    { category: 'Language', items: ['Java', 'C++'] },
+    { category: 'Framework', items: ['MFC'] },
+    { category: 'Tool', items: ['Visual Studio', 'Visual Studio Code', 'Tortoise SVN', 'GitHub'] },
   ],
-  viewCounter: {
-    total: '조회수',
-    today: '오늘',
-  },
   lockScreen: {
     status: '[시스템 인증 실패]',
     messagePrefix: '코드가 궁금하시다면 ',
@@ -225,7 +228,7 @@ const KOREAN_CONTENT: PortfolioContent = {
   metadata: {
     title: 'JwonLEE - Software Engineer',
     description: '본질적인 시스템의 병목을 찾아내고, 성능을 끌어올립니다. 이재원 - 소프트웨어 엔지니어',
-    keywords: 'Software Engineer, 개발자, 포트폴리오, JwonLEE, 이재원, Java, 인프라, 아스타틴, Astn',
+    keywords: 'Software Engineer, 개발자, 포트폴리오, JwonLEE, 이재원, Java, C++, 시스템 성능',
     openGraphTitle: 'JwonLEE - Software Engineer',
     openGraphDescription: '본질적인 시스템의 병목을 찾아내고, 성능을 끌어올립니다. 이재원 - 소프트웨어 엔지니어',
   },
@@ -236,13 +239,25 @@ const ENGLISH_CONTENT: PortfolioContent = {
     name: 'JwonLEE',
     role: 'Software Engineer',
     imageAlt: 'JwonLEE profile photo',
-    copyComplete: 'Copied!',
     tagline: {
       prefix: 'Identifying critical system ',
       firstEmphasis: 'bottlenecks',
       middle: ' and delivering measurable ',
       secondEmphasis: 'performance',
       suffix: ' gains.',
+    },
+    navigation: {
+      work: 'View selected work',
+      contact: 'Get in touch',
+    },
+    contact: {
+      eyebrow: 'Contact',
+      title: 'Let’s build better systems together.',
+      description: 'I welcome conversations about projects and technical challenges.',
+      emailLabel: 'Copy email',
+      copyComplete: 'Copied',
+      githubLabel: 'GitHub',
+      linkedinLabel: 'LinkedIn',
     },
     languageSwitcher: {
       label: 'Select display language',
@@ -251,26 +266,26 @@ const ENGLISH_CONTENT: PortfolioContent = {
     },
   },
   sections: {
-    about: '~/about',
-    skills: '~/skills',
-    projects: '~/projects',
-    openSource: '~/open source',
+    impact: 'Impact',
+    experience: 'Selected Work',
+    openSource: 'Open Source',
+    skills: 'Toolkit',
   },
-  highlights: [
+  achievements: [
     {
-      id: 'dalso',
-      icon: 'performance',
-      text: 'Optimized pricing and event processing for 3,000+ items, raising TPS from 3 to 20',
+      projectId: 'dalso',
+      value: '3 → 20 TPS',
+      label: 'Optimized pricing and event processing for 3,000+ items',
     },
     {
-      id: 'cosmos',
-      icon: 'realtime',
-      text: 'Built a concurrency-safe, event-driven server for real-time market data',
+      projectId: 'samiltech',
+      value: '83% faster',
+      label: 'Reduced communication latency through modular redesign',
     },
     {
-      id: 'samiltech',
-      icon: 'automation',
-      text: 'Improved legacy communication speed by 83% and reduced documentation time by 93%',
+      projectId: 'samiltech',
+      value: '93% faster',
+      label: 'Reduced documentation time with workflow automation',
     },
   ],
   projects: [
@@ -278,49 +293,41 @@ const ENGLISH_CONTENT: PortfolioContent = {
       id: 'dalso',
       title: 'Dalso Town Project',
       period: 'Dec 2022 — Present',
-      desc: [
-        'Architected and continue to operate a Java-based game server',
-        'Designed a dynamic economy for 3,000+ items using inventory and demand signals',
-        'Raised server performance from 3 to 20 TPS by eliminating repetitive events and optimizing trade operations',
+      summary: 'Raised server performance from 3 to 20 TPS by optimizing repetitive events and trade operations.',
+      details: [
+        'Architected and continue to operate a Java-based game server.',
+        'Designed a dynamic economy for 3,000+ items using inventory and demand signals.',
       ],
       tech: ['Java', 'Git', 'Ubuntu'],
       links: [
         {
-          icon: 'notion',
           text: 'Project documentation',
           url: 'https://jaxple.notion.site/1e892da7e82180bda9f4d43c84200f97?source=copy_link',
-          hoverClass: 'hover:bg-black hover:border-black',
         },
         {
-          icon: 'github',
           text: 'Base source code',
           url: 'https://github.com/JAXPLE/R10-PUBLIC',
-          hoverClass: 'hover:bg-[#24292e] hover:border-[#24292e]',
         },
         {
-          icon: 'notion',
           text: 'Code documentation',
           url: 'https://jaxple.notion.site/R10-Project-1ae92da7e82181e6b595d3dd3128d484',
-          hoverClass: 'hover:bg-black hover:border-black',
         },
       ],
     },
     {
       id: 'cosmos',
-      title: 'Cosmos Partners',
+      title: 'Cosmos Project',
       period: 'Mar 2025 — Jun 2025',
-      desc: [
-        'Designed and implemented an event-driven server for real-time market data processing',
-        'Built an extensible architecture using the Observer pattern',
-        'Implemented an asynchronous multithreaded pipeline for concurrent traffic processing',
+      summary: 'Designed and built a concurrency-safe, event-driven server for real-time market data.',
+      details: [
+        'Built an extensible event-processing architecture using the Observer pattern.',
+        'Implemented an asynchronous multithreaded pipeline for concurrent traffic.',
       ],
       tech: ['Java', 'Git', 'Architecture Design'],
       links: [
         {
-          icon: 'notion',
           text: 'Project documentation',
           url: 'https://jaxple.notion.site/COSMOS-Project-23592da7e821809dab4eea238f51fd43?source=copy_link',
-          hoverClass: 'hover:bg-black hover:border-black',
         },
       ],
     },
@@ -328,10 +335,10 @@ const ENGLISH_CONTENT: PortfolioContent = {
       id: 'samiltech',
       title: 'Samil Tech Co., Ltd.',
       period: 'Jul 2023 — Jan 2025',
-      desc: [
-        'Developed MFC-based equipment software for 13 clients across six countries',
-        'Reduced communication latency by 83% through protocol analysis and modular redesign',
-        'Reduced repetitive workflow time by 93% with a custom automation tool',
+      summary: 'Reduced legacy communication latency by 83% and repetitive documentation time by 93%.',
+      details: [
+        'Developed MFC-based equipment software for 13 clients across six countries.',
+        'Redesigned communication in modular blocks and built a workflow automation tool.',
       ],
       tech: ['C++', 'MFC', 'SVN'],
     },
@@ -341,37 +348,29 @@ const ENGLISH_CONTENT: PortfolioContent = {
       id: 'wurst',
       title: 'Wurst Client',
       period: 'Dec 2022 — Present',
-      desc: [
-        'Contributed modules to a Java open-source project with 1.4k+ GitHub stars',
-        'Designed and implemented asynchronous real-time chat translation using message hooks and the Google Translate API',
-        'Improved usability by replacing hard-coded configuration with a GUI',
+      summary: 'Contributed real-time translation and usability modules to a Java project with 1.4k+ GitHub stars.',
+      details: [
+        'Built asynchronous chat translation using message hooks and the Google Translate API.',
+        'Replaced hard-coded configuration with a GUI to improve usability.',
       ],
       tech: ['Java', 'Git', 'Open Source'],
       links: [
         {
-          icon: 'github',
-          text: 'PR: asynchronous chat translation foundation',
+          text: 'PR · Asynchronous chat translation',
           url: 'https://github.com/Wurst-Imperium/Wurst7/pull/1021',
-          hoverClass: 'hover:bg-[#24292e] hover:border-[#24292e]',
         },
         {
-          icon: 'github',
-          text: 'PR: GUI-based teleport module',
+          text: 'PR · GUI teleport module',
           url: 'https://github.com/Wurst-Imperium/Wurst7/pull/899',
-          hoverClass: 'hover:bg-[#24292e] hover:border-[#24292e]',
         },
       ],
     },
   ],
   skills: [
-    { category: 'Language', items: 'Java, C++' },
-    { category: 'Framework', items: 'MFC' },
-    { category: 'Tool', items: 'Visual Studio, Visual Studio Code, Tortoise SVN, GitHub' },
+    { category: 'Language', items: ['Java', 'C++'] },
+    { category: 'Framework', items: ['MFC'] },
+    { category: 'Tool', items: ['Visual Studio', 'Visual Studio Code', 'Tortoise SVN', 'GitHub'] },
   ],
-  viewCounter: {
-    total: 'VIEWS',
-    today: 'TODAY',
-  },
   lockScreen: {
     status: '[System Auth Failed]',
     messagePrefix: 'View the source code in the ',

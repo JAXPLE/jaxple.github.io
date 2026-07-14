@@ -4,29 +4,22 @@ interface SkillSectionProps {
   skills: Skill[];
 }
 
-export const SkillSection: React.FC<SkillSectionProps> = ({ skills }) => (
-  <div className="space-y-3">
-    {skills.map((skill, index) => (
-      <div
-        key={skill.category}
-        data-scroll-reveal
-        className="grid grid-cols-1 sm:grid-cols-[140px_minmax(0,1fr)] gap-3 rounded-lg border border-white/10 bg-[#121214] p-4"
-        style={{ animationDelay: `${index * 80}ms` }}
-      >
-        <h4 className="font-mono text-xs tracking-[0.16em] text-[#8b8b93] font-bold pt-1">
-          {skill.category}
-        </h4>
-        <div className="flex flex-wrap gap-2">
-          {skill.items.split(', ').map((item) => (
-            <span
-              key={item}
-              className="px-3 py-1 rounded-md bg-white/[0.04] border border-white/10 text-[#d4d4d8] text-sm font-medium"
-            >
-              {item}
-            </span>
-          ))}
+export function SkillSection({ skills }: SkillSectionProps) {
+  return (
+    <dl>
+      {skills.map((skill) => (
+        <div
+          key={skill.category}
+          className="grid gap-3 border-b border-[var(--color-line)] py-7 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-8"
+        >
+          <dt className="font-mono text-xs tracking-[0.12em] text-[var(--color-muted)] uppercase">
+            {skill.category}
+          </dt>
+          <dd className="text-base leading-7 text-[var(--color-text)]">
+            {skill.items.join(' · ')}
+          </dd>
         </div>
-      </div>
-    ))}
-  </div>
-);
+      ))}
+    </dl>
+  );
+}

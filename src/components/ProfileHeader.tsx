@@ -1,104 +1,55 @@
-import { Check, Github, Linkedin, Mail } from 'lucide-react';
-import React, { useState } from 'react';
 import type { ProfileContent } from '../data/portfolio';
-import { SocialButton } from './SocialButton';
 
 interface ProfileHeaderProps {
   content: ProfileContent;
 }
 
-export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ content }) => {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopyEmail = async (event: React.MouseEvent | React.TouchEvent) => {
-    event.preventDefault();
-    const email = 'jaxple@gmail.com';
-
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(email);
-      } else {
-        throw new Error('Clipboard API unavailable');
-      }
-    } catch {
-      const textArea = document.createElement('textarea');
-      textArea.value = email;
-      textArea.setAttribute('readonly', '');
-      textArea.style.position = 'fixed';
-      textArea.style.left = '-9999px';
-      textArea.style.top = '0';
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-
-      try {
-        document.execCommand('copy');
-      } catch (copyError) {
-        console.error('Fallback copy failed', copyError);
-      }
-
-      document.body.removeChild(textArea);
-    }
-
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
+export function ProfileHeader({ content }: ProfileHeaderProps) {
   return (
-    <header className="w-full flex flex-col items-center lg:items-start text-center lg:text-left space-y-7 py-2 lg:py-0">
-      <div className="w-28 h-28 rounded-full border border-white/10 relative p-1.5 bg-[#111113] transition-colors duration-200 hover:border-white/20">
+    <div>
+      <div className="flex items-center gap-4">
         <img
           src="https://avatars.githubusercontent.com/u/114869036?v=4"
           alt={content.imageAlt}
-          loading="lazy"
-          width="100"
-          height="100"
-          className="w-full h-full rounded-full object-cover relative z-10"
+          width="56"
+          height="56"
+          className="h-14 w-14 rounded-full object-cover grayscale"
         />
-        <div className="absolute bottom-2 right-2 w-5 h-5 bg-[#10b981] rounded-full border-[4px] border-[#111113] z-20" />
+        <p className="font-mono text-xs tracking-[0.18em] text-[var(--color-muted)] uppercase">
+          {content.role}
+        </p>
       </div>
 
-      <div className="space-y-3">
-        <h1 className="text-5xl md:text-6xl lg:text-5xl font-black tracking-tight text-white">
-          {content.name}
-        </h1>
-        <div className="flex items-center justify-center lg:justify-start gap-2">
-          <p className="font-mono text-xs md:text-sm tracking-[0.2em] text-[#71717a]">
-            {content.role}
-          </p>
-        </div>
-      </div>
+      <h1 className="mt-10 text-[clamp(3.4rem,10vw,6.5rem)] leading-[0.88] font-semibold tracking-[-0.065em] text-[var(--color-text)]">
+        {content.name}
+      </h1>
 
-      <p className="text-base md:text-lg lg:text-base leading-relaxed max-w-xl lg:max-w-[280px] text-[#a1a1aa] font-medium">
+      <p className="mt-10 max-w-4xl text-[clamp(1.75rem,5vw,3.25rem)] leading-[1.08] tracking-[-0.045em] text-[var(--color-muted)]">
         {content.tagline.prefix}
-        <span className="text-white">{content.tagline.firstEmphasis}</span>
+        <strong className="font-medium text-[var(--color-text)]">
+          {content.tagline.firstEmphasis}
+        </strong>
         {content.tagline.middle}
-        <br className="hidden sm:block lg:hidden" />
-        <span className="text-white">{content.tagline.secondEmphasis}</span>
+        <strong className="font-medium text-[var(--color-text)]">
+          {content.tagline.secondEmphasis}
+        </strong>
         {content.tagline.suffix}
       </p>
 
-      <div className="flex flex-col sm:flex-row lg:flex-col gap-3 pt-2 items-center lg:items-stretch justify-center lg:justify-start w-full">
-        <SocialButton
-          onClick={handleCopyEmail}
-          icon={copied ? <Check size={16} className="text-green-400" /> : <Mail size={16} />}
-          label={copied ? content.copyComplete : 'jaxple@gmail.com'}
-          isCopied={copied}
-          hoverColorClass="hover:bg-white/[0.05] hover:border-[#EA4335]/60"
-        />
-        <SocialButton
-          href="https://github.com/JAXPLE"
-          icon={<Github size={16} />}
-          label="JAXPLE"
-          hoverColorClass="hover:bg-white/[0.05] hover:border-white/20"
-        />
-        <SocialButton
-          href="https://www.linkedin.com/in/jaxple"
-          icon={<Linkedin size={16} />}
-          label="in/jaxple"
-          hoverColorClass="hover:bg-white/[0.05] hover:border-[#0A66C2]/60"
-        />
-      </div>
-    </header>
+      <nav aria-label="Portfolio" className="mt-12 flex flex-wrap gap-x-8 gap-y-3">
+        <a
+          href="#work"
+          className="inline-flex min-h-11 items-center border-b border-[var(--color-text)] text-sm font-medium transition-colors duration-200 hover:border-[var(--color-muted)] hover:text-[var(--color-muted)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-text)]"
+        >
+          {content.navigation.work}
+        </a>
+        <a
+          href="#contact"
+          className="inline-flex min-h-11 items-center border-b border-transparent text-sm text-[var(--color-muted)] transition-colors duration-200 hover:border-[var(--color-muted)] hover:text-[var(--color-text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-text)]"
+        >
+          {content.navigation.contact}
+        </a>
+      </nav>
+    </div>
   );
-};
+}
