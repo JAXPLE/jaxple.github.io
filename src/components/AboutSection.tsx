@@ -15,7 +15,7 @@ export const AboutSection: React.FC = () => {
       text: "동시성 이슈를 해결한 Event-Driven 실시간 서버 구축",
     },
     {
-      id: 'semicon-control',
+      id: 'samiltech',
       icon: <Cpu size={16} className="text-purple-400" />,
       text: "레거시 통신 속도 83% 개선 및 문서 자동화로 소요 시간 93% 단축",
     },

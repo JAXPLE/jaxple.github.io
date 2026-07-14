@@ -53,7 +53,7 @@ export const PROJECTS_DATA: Project[] = [
   },
   {
     id: 'cosmos',
-    title: 'TradingView ↔ Telegram 시세 알림 서버 개발',
+    title: '코스모스 프로젝트',
     period: '2025.03 - 2025.06',
     desc: [
       '실시간 시세 데이터 처리를 위한 Event-Driven 서버 설계 및 구현',
@@ -71,8 +71,8 @@ export const PROJECTS_DATA: Project[] = [
     ],
   },
   {
-    id: 'semicon-control',
-    title: 'MFC 기반 장비 소프트웨어 개발 및 유지보수',
+    id: 'samiltech',
+    title: '삼일테크(주)',
     period: '2023.07 - 2025.01',
     desc: [
       '6개국의 총 13개 고객사 대응 MFC 기반 장비 소프트웨어 개발',
