@@ -55,7 +55,6 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ content }) => {
           height="100"
           className="w-full h-full rounded-full object-cover relative z-10"
         />
-        <div className="absolute bottom-2 right-2 w-5 h-5 bg-[#10b981] rounded-full border-[4px] border-[#111113] z-20" />
       </div>
 
       <div className="space-y-3">
