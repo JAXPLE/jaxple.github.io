@@ -56,8 +56,8 @@ export function LanguageToggle({
               aria-label={getOptionLabel(option.language)}
               aria-pressed={isActive}
               onClick={() => handleChange(option.language)}
-              className={`group inline-flex min-h-8 min-w-8 items-center justify-center gap-1.5 rounded-sm px-1 font-mono text-[10px] font-bold tracking-widest transition-colors duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40 ${
-                isActive ? 'text-[#e4e4e7]' : 'text-[#52525b] hover:text-[#a1a1aa]'
+              className={`group inline-flex min-h-11 min-w-11 items-center justify-center gap-1.5 rounded-sm px-1 font-mono text-xs font-bold tracking-widest transition-colors duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40 ${
+                isActive ? 'text-[#e4e4e7]' : 'text-[#a1a1aa] hover:text-white'
               }`}
             >
               <span

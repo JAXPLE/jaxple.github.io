@@ -23,8 +23,14 @@
   transform: translate3d(0, 16px, 0);
 }
 
-[data-scroll-reveal].is-visible {
+[data-scroll-reveal][data-scroll-visible] {
   animation: scrollRevealUp 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+[data-scroll-reveal][data-scroll-instant] {
+  opacity: 1;
+  transform: none;
+  animation: none;
 }
 
 @keyframes scrollRevealUp {
@@ -41,9 +47,17 @@
 
 @media (prefers-reduced-motion: reduce) {
   [data-scroll-reveal],
-  [data-scroll-reveal].is-visible {
+  [data-scroll-reveal][data-scroll-visible],
+  .animate-fade-in {
     animation: none;
     opacity: 1;
     transform: none;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

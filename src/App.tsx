@@ -26,8 +26,8 @@ function renderSection(node: SectionNode) {
       <section key={node.id} className="space-y-6">
         <SectionHeader title={node.title} />
         <div className="grid grid-cols-1 gap-4">
-          {node.data.map((project, index) => (
-            <ProjectCard key={project.id} project={project} revealDelay={index * 90} />
+          {node.data.map((project) => (
+            <ProjectCard key={project.id} project={project} />
           ))}
         </div>
       </section>
@@ -81,7 +81,7 @@ function App() {
   ];
 
   return (
-    <div className="relative min-h-screen bg-[#0d0d0e] text-[#b9b9c0] font-sans selection:bg-[#303034] selection:text-white flex justify-center py-8 md:py-16 px-5 md:px-8 overflow-x-hidden">
+    <div className="relative min-h-screen bg-[#0d0d0e] text-[#b9b9c0] font-sans selection:bg-[#303034] selection:text-white flex justify-center py-8 md:py-16 px-5 md:px-8 overflow-x-clip">
       <div
         className="fixed top-0 left-0 h-[2px] z-50 transition-all duration-150 ease-out bg-[#d4d4d8]"
         style={{ width: `${scrollProgress}%` }}

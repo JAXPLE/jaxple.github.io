@@ -9,10 +9,9 @@ const LINK_ICON_MAP: Record<ProjectLink['icon'], React.ReactNode> = {
 
 interface ProjectCardProps {
   project: Project;
-  revealDelay?: number;
 }
 
-export const ProjectCard: React.FC<ProjectCardProps> = ({ project, revealDelay = 0 }) => {
+export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const [isHighlighted, setIsHighlighted] = useState(false);
 
   useEffect(() => {
@@ -41,14 +40,14 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, revealDelay =
   return (
     <article
       id={project.id}
-      data-scroll-reveal
-      className={`relative p-5 md:p-6 rounded-lg border border-white/10 bg-[#121214] scroll-mt-24 transition-colors duration-300 ${isHighlighted ? 'border-white/35 bg-[#17171a]' : ''}`}
-      style={{ animationDelay: `${revealDelay}ms` }}
+      tabIndex={-1}
+      aria-labelledby={`${project.id}-title`}
+      className={`relative p-5 md:p-6 rounded-lg border scroll-mt-24 transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 ${isHighlighted ? 'border-white/35 bg-[#17171a]' : 'border-white/10 bg-[#121214]'}`}
     >
       <div className="flex flex-col h-full">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">
           <div className="min-w-0 space-y-1">
-            <h3 className="text-lg md:text-xl font-bold tracking-tight text-[#f4f4f5] leading-snug">
+            <h3 id={`${project.id}-title`} className="text-lg md:text-xl font-bold tracking-tight text-[#f4f4f5] leading-snug">
               {project.title}
             </h3>
           </div>
@@ -82,7 +81,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, revealDelay =
                 href={link.url}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex min-w-0 items-center gap-2 rounded-md border border-white/10 bg-white/[0.025] px-3 py-2 text-[12px] font-mono font-semibold text-[#a1a1aa] transition-colors hover:border-white/20 hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+                className="inline-flex min-h-11 min-w-0 items-center gap-2 rounded-md border border-white/10 bg-white/[0.025] px-3 py-2 text-[12px] font-mono font-semibold text-[#a1a1aa] transition-colors hover:border-white/20 hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
               >
                 <span className="shrink-0 text-[#a1a1aa]">
                   {LINK_ICON_MAP[link.icon]}

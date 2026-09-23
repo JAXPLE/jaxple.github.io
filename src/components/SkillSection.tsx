@@ -13,9 +13,9 @@ export const SkillSection: React.FC<SkillSectionProps> = ({ skills }) => (
         className="grid grid-cols-1 sm:grid-cols-[140px_minmax(0,1fr)] gap-3 rounded-lg border border-white/10 bg-[#121214] p-4"
         style={{ animationDelay: `${index * 80}ms` }}
       >
-        <h4 className="font-mono text-xs tracking-[0.16em] text-[#8b8b93] font-bold pt-1">
+        <h3 className="font-mono text-xs tracking-[0.16em] text-[#a1a1aa] font-bold pt-1">
           {skill.category}
-        </h4>
+        </h3>
         <div className="flex flex-wrap gap-2">
           {skill.items.split(', ').map((item) => (
             <span

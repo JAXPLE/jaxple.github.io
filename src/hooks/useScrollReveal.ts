@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 
 const DEFAULT_SELECTOR = '[data-scroll-reveal]';
-const VISIBLE_CLASS = 'is-visible';
+// Keep observer-owned state separate from React's className updates.
+const VISIBLE_ATTRIBUTE = 'data-scroll-visible';
 
 interface ScrollRevealOptions {
   selector?: string;
@@ -25,7 +26,7 @@ export function useScrollReveal({
     }
 
     const revealAll = () => {
-      targets.forEach((target) => target.classList.add(VISIBLE_CLASS));
+      targets.forEach((target) => target.setAttribute(VISIBLE_ATTRIBUTE, 'true'));
     };
 
     if (!window.IntersectionObserver) {
@@ -45,7 +46,7 @@ export function useScrollReveal({
             return;
           }
 
-          entry.target.classList.add(VISIBLE_CLASS);
+          entry.target.setAttribute(VISIBLE_ATTRIBUTE, 'true');
           currentObserver.unobserve(entry.target);
         });
       },
@@ -54,8 +55,20 @@ export function useScrollReveal({
 
     targets.forEach((target) => observer.observe(target));
 
+    const revealFocused = (event: FocusEvent) => {
+      if (!(event.target instanceof Element)) return;
+      const target = event.target.closest<HTMLElement>(selector);
+      if (!target) return;
+
+      target.setAttribute(VISIBLE_ATTRIBUTE, 'true');
+      target.setAttribute('data-scroll-instant', 'true');
+      observer.unobserve(target);
+    };
+    document.addEventListener('focusin', revealFocused);
+
     return () => {
       observer.disconnect();
+      document.removeEventListener('focusin', revealFocused);
     };
   }, [rootMargin, selector, threshold]);
 }
