@@ -1,7 +1,7 @@
 import type { Language, LocalizedMetadata } from '../i18n';
 
 export interface ProjectLink {
-  icon: 'github' | 'notion';
+  icon: 'github' | 'notion' | 'website';
   text: string;
   url: string;
   hoverClass: string;
@@ -10,22 +10,20 @@ export interface ProjectLink {
 export interface Project {
   id: string;
   title: string;
-  period: string;
+  period?: string;
+  ongoingLabel?: string;
+  accent?: 'red' | 'white';
   desc: string[];
   tech: string[];
   links?: ProjectLink[];
 }
 
-export interface Skill {
+export type Skill = {
   category: string;
-  items: string;
-}
-
-export interface Highlight {
-  id: string;
-  icon: 'performance' | 'realtime' | 'automation';
-  text: string;
-}
+} & (
+  | { items: string }
+  | { groups: { label: string; items: string[] }[] }
+);
 
 export interface ProfileContent {
   name: string;
@@ -61,12 +59,10 @@ export interface LockScreenContent {
 export interface PortfolioContent {
   profile: ProfileContent;
   sections: {
-    about: string;
     skills: string;
     projects: string;
     openSource: string;
   };
-  highlights: Highlight[];
   projects: Project[];
   openSource: Project[];
   skills: Skill[];
@@ -95,39 +91,40 @@ const KOREAN_CONTENT: PortfolioContent = {
     },
   },
   sections: {
-    about: '~/about',
     skills: '~/skills',
     projects: '~/projects',
     openSource: '~/open source',
   },
-  highlights: [
-    {
-      id: 'dalso',
-      icon: 'performance',
-      text: '3,000개+ 아이템 시세 연산 및 이벤트 최적화 (TPS 3 → 20)',
-    },
-    {
-      id: 'cosmos',
-      icon: 'realtime',
-      text: '동시성 이슈를 해결한 Event-Driven 실시간 서버 구축',
-    },
-    {
-      id: 'samiltech',
-      icon: 'automation',
-      text: '레거시 통신 속도 83% 개선 및 문서 자동화로 소요 시간 93% 단축',
-    },
-  ],
   projects: [
+    {
+      id: 'daewon',
+      title: '대원 C&C',
+      period: '2026.09 - 현재',
+      ongoingLabel: '재직 중',
+      accent: 'red',
+      desc: [],
+      tech: ['React'],
+      links: [
+        {
+          icon: 'website',
+          text: '대원 C&C',
+          url: 'https://dwcc.co.kr/main/index.asp',
+          hoverClass: 'hover:bg-white/10 hover:border-white/20',
+        },
+      ],
+    },
     {
       id: 'dalso',
       title: '달소읍 프로젝트',
       period: '2022.12 — 현재',
+      ongoingLabel: '진행 중',
+      accent: 'white',
       desc: [
         'Java 기반 게임 서버 아키텍처 설계 및 장기 운영',
         '3000개 이상의 아이템의 재고·수요 기반 유동 경제 시스템 로직 설계',
         '반복 이벤트 차단 및 거래 연산 최적화로 서버 성능 개선 (TPS 3 → 20)',
       ],
-      tech: ['Java', 'Git', 'Ubuntu'],
+      tech: ['Java'],
       links: [
         {
           icon: 'notion',
@@ -158,7 +155,7 @@ const KOREAN_CONTENT: PortfolioContent = {
         'Observer 패턴 기반 확장형 아키텍처 설계',
         '비동기 Multi-thread 파이프라인 구현을 통한 트래픽 처리',
       ],
-      tech: ['Java', 'Git', 'Architect 설계'],
+      tech: ['Java'],
       links: [
         {
           icon: 'notion',
@@ -177,20 +174,28 @@ const KOREAN_CONTENT: PortfolioContent = {
         '통신 구조 분석 및 블록 단위 재설계 (latency 83% 단축)',
         '반복 업무 프로세스 자동화 툴 구현 (소요 시간 93% 단축)',
       ],
-      tech: ['C++', 'MFC', 'SVN'],
+      tech: ['C++', 'SVN'],
+      links: [
+        {
+          icon: 'website',
+          text: '삼일테크',
+          url: 'https://www.samiltech.com/',
+          hoverClass: 'hover:bg-white/10 hover:border-white/20',
+        },
+      ],
     },
   ],
   openSource: [
     {
       id: 'wurst',
       title: 'Wurst Client',
-      period: '2022.12 - 현재',
+      period: '2022.12 — 2026.01',
       desc: [
         'GitHub 1.4k+ Java 오픈소스 프로젝트 모듈 기여',
         '채팅 hooking 후 구글번역 API를 통한 실시간 비동기 채팅번역 모듈 설계·구현',
         '기존 하드코딩 구조를 GUI로 변경하여 사용성 개선',
       ],
-      tech: ['Java', 'Git', 'Open Source'],
+      tech: ['Java'],
       links: [
         {
           icon: 'github',
@@ -208,9 +213,16 @@ const KOREAN_CONTENT: PortfolioContent = {
     },
   ],
   skills: [
-    { category: 'Language', items: 'Java, C++' },
+    { category: 'Language', items: 'Java, C++, React' },
     { category: 'Framework', items: 'MFC' },
-    { category: 'Tool', items: 'Visual Studio, Visual Studio Code, Tortoise SVN, GitHub' },
+    {
+      category: 'Tool',
+      groups: [
+        { label: '개발 환경', items: ['Visual Studio', 'Visual Studio Code'] },
+        { label: '버전 관리', items: ['Tortoise SVN', 'GitHub', 'GitLab'] },
+        { label: '협업', items: ['Jira', 'Slack'] },
+      ],
+    },
   ],
   viewCounter: {
     total: '조회수',
@@ -251,39 +263,40 @@ const ENGLISH_CONTENT: PortfolioContent = {
     },
   },
   sections: {
-    about: '~/about',
     skills: '~/skills',
     projects: '~/projects',
     openSource: '~/open source',
   },
-  highlights: [
-    {
-      id: 'dalso',
-      icon: 'performance',
-      text: 'Optimized pricing and event processing for 3,000+ items, raising TPS from 3 to 20',
-    },
-    {
-      id: 'cosmos',
-      icon: 'realtime',
-      text: 'Built a concurrency-safe, event-driven server for real-time market data',
-    },
-    {
-      id: 'samiltech',
-      icon: 'automation',
-      text: 'Improved legacy communication speed by 83% and reduced documentation time by 93%',
-    },
-  ],
   projects: [
+    {
+      id: 'daewon',
+      title: 'Daewon C&C',
+      period: 'Sep 2026 - Present',
+      ongoingLabel: 'Currently employed',
+      accent: 'red',
+      desc: [],
+      tech: ['React'],
+      links: [
+        {
+          icon: 'website',
+          text: 'Daewon C&C',
+          url: 'https://dwcc.co.kr/main/index.asp',
+          hoverClass: 'hover:bg-white/10 hover:border-white/20',
+        },
+      ],
+    },
     {
       id: 'dalso',
       title: 'Dalso Town Project',
       period: 'Dec 2022 — Present',
+      ongoingLabel: 'In progress',
+      accent: 'white',
       desc: [
         'Architected and continue to operate a Java-based game server',
         'Designed a dynamic economy for 3,000+ items using inventory and demand signals',
         'Raised server performance from 3 to 20 TPS by eliminating repetitive events and optimizing trade operations',
       ],
-      tech: ['Java', 'Git', 'Ubuntu'],
+      tech: ['Java'],
       links: [
         {
           icon: 'notion',
@@ -314,7 +327,7 @@ const ENGLISH_CONTENT: PortfolioContent = {
         'Built an extensible architecture using the Observer pattern',
         'Implemented an asynchronous multithreaded pipeline for concurrent traffic processing',
       ],
-      tech: ['Java', 'Git', 'Architecture Design'],
+      tech: ['Java'],
       links: [
         {
           icon: 'notion',
@@ -333,20 +346,28 @@ const ENGLISH_CONTENT: PortfolioContent = {
         'Reduced communication latency by 83% through protocol analysis and modular redesign',
         'Reduced repetitive workflow time by 93% with a custom automation tool',
       ],
-      tech: ['C++', 'MFC', 'SVN'],
+      tech: ['C++', 'SVN'],
+      links: [
+        {
+          icon: 'website',
+          text: 'Samil Tech',
+          url: 'https://www.samiltech.com/',
+          hoverClass: 'hover:bg-white/10 hover:border-white/20',
+        },
+      ],
     },
   ],
   openSource: [
     {
       id: 'wurst',
       title: 'Wurst Client',
-      period: 'Dec 2022 — Present',
+      period: 'Dec 2022 — Jan 2026',
       desc: [
         'Contributed modules to a Java open-source project with 1.4k+ GitHub stars',
         'Designed and implemented asynchronous real-time chat translation using message hooks and the Google Translate API',
         'Improved usability by replacing hard-coded configuration with a GUI',
       ],
-      tech: ['Java', 'Git', 'Open Source'],
+      tech: ['Java'],
       links: [
         {
           icon: 'github',
@@ -364,9 +385,16 @@ const ENGLISH_CONTENT: PortfolioContent = {
     },
   ],
   skills: [
-    { category: 'Language', items: 'Java, C++' },
+    { category: 'Language', items: 'Java, C++, React' },
     { category: 'Framework', items: 'MFC' },
-    { category: 'Tool', items: 'Visual Studio, Visual Studio Code, Tortoise SVN, GitHub' },
+    {
+      category: 'Tool',
+      groups: [
+        { label: 'Development', items: ['Visual Studio', 'Visual Studio Code'] },
+        { label: 'Version control', items: ['Tortoise SVN', 'GitHub', 'GitLab'] },
+        { label: 'Collaboration', items: ['Jira', 'Slack'] },
+      ],
+    },
   ],
   viewCounter: {
     total: 'VIEWS',

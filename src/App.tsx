@@ -1,5 +1,4 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { AboutSection } from './components/AboutSection';
 import { LanguageToggle } from './components/LanguageToggle';
 import { ProfileHeader } from './components/ProfileHeader';
 import { ProjectCard } from './components/ProjectCard';
@@ -54,12 +53,6 @@ function App() {
   }, [content.metadata, language]);
 
   const sections: SectionNode[] = [
-    {
-      type: 'static',
-      id: 'about',
-      title: content.sections.about,
-      content: <AboutSection highlights={content.highlights} />,
-    },
     {
       type: 'static',
       id: 'skills',
